@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import api from '../services/api';
-import { PokeCard } from './PokeCard';
+import api from '../../services/api';
+import { PokeCard } from '../PokeCard/PokeCard';
+import { Container, Content } from './styles';
 
 type pokeProps = {
   id: string;
@@ -39,18 +40,18 @@ export const Hero = () => {
 
   const pokemonsObjects = Object.keys(allPokemons);
   return (
-    <>
+    <Container>
     {pokemonsObjects.map((poke) => (
-      <div key={allPokemons[poke].id}>
+      <Content key={allPokemons[poke].id}>
         <PokeCard
           id={allPokemons[poke].id}
           image={allPokemons[poke].sprites.other.dream_world.front_default}
           name={allPokemons[poke].name}
           type={allPokemons[poke].types.map((item: pokeProps ) => item.type.name)}
         />
-      </div>
+      </Content>
     )
     )}
-  </>
+  </Container>
   )
 }
