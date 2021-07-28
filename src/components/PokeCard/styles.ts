@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 export const Container = styled.div`
   display: flex;
@@ -36,11 +36,14 @@ export const Card = styled.div`
     text-align: center;
   }
 
-  .poke-card {
-    background-color: purple;
-    .dapadale {
-      opacity: 0.5;
-    }
+  .bg-color {
+    background: rgba(0, 0, 0, 0.15);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    padding: 90px;
+    margin-top: -10px;
+    position: absolute;
   }
 
   .poke-id {

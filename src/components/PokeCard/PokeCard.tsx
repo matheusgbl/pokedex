@@ -1,6 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
 import React from 'react';
-import 'react-lazy-load-image-component/src/effects/blur.css';
 import { Tooltip, withStyles, Zoom } from '@material-ui/core';
 import { colorTypeGradients } from '../../utils/utils';
 import Image from 'next/image';
@@ -40,11 +39,12 @@ export const PokeCard = (
           style={
             { 
               background: `linear-gradient(${finalColor[0]}, ${finalColor[1]})` 
-              }
+            }
           }>
           <div className="poke-id">
             # {String(id).padStart(3, '0')}
           </div>
+          <div className="bg-color" />
           <Image
             loading="lazy"
             alt="image-pokemon"
