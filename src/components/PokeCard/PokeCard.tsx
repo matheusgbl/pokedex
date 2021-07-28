@@ -1,8 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
 import React from 'react';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import { Tooltip, withStyles, Zoom } from '@material-ui/core';
+import { colorTypeGradients } from '../../utils/utils';
+import Image from 'next/image';
 
 import { Container, Card } from './styles';
 
@@ -25,32 +26,46 @@ export const PokeCard = (
       },
     }))(Tooltip);
 
+    let finalColor;
+
+    if (type.length === 2) {
+        finalColor = colorTypeGradients(type[0], type[1], type.length);
+    } else {
+        finalColor = colorTypeGradients(type[0], type[0], type.length);
+    }
+
     return (
       <Container key={id}>
-        <Card>
+        <Card
+          style={
+            { 
+              background: `linear-gradient(${finalColor[0]}, ${finalColor[1]})` 
+              }
+          }>
           <div className="poke-id">
             # {String(id).padStart(3, '0')}
           </div>
-          <LazyLoadImage
+          <Image
+            loading="lazy"
             alt="image-pokemon"
             height={150}
+            width={150}
             src={image}
-            visibleByDefault={false}
-            delayMethod={'debounce'}
-            effect="blur"
+            blurDataURL={image}
+            placeholder="blur"
             className="img__thumbnail"
             />
           <h3>{name}</h3>
           <div className="poke-type">
-          {type.map((type) => (
+          {type.map((pokeType) => (
             <LightTooltip
               TransitionComponent={Zoom}
-              key={type} 
-              title={type}
+              key={pokeType} 
+              title={pokeType}
               arrow
             >
-              <div className={`poke-type-bg ${type}`}>
-                <img src={`${type}.svg`} alt="pokemon type" />
+              <div className={`poke-type-bg ${pokeType}`}>
+                <img src={`${pokeType}.svg`} alt="Pokemon type" />
               </div>
             </LightTooltip>
           ))}
