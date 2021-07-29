@@ -37,7 +37,8 @@ export const Card = styled.div`
   }
 
   .bg-color {
-    background: rgba(0, 0, 0, 0.15);
+    background: #111;
+    opacity: 0.08;
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -100,8 +101,8 @@ export const Card = styled.div`
   }
 
   .electric {
-    background: #F2D94E;
-    box-shadow: 0 0 20px #F2D94E;
+    background: #F5BC4E;
+    box-shadow: 0 0 20px #F5BC4E;
   }
 
   .fire {

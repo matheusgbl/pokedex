@@ -1,11 +1,11 @@
 import React from 'react'
-import { Hero } from '../components/Hero/Hero'
+import { PokeInfo } from '../components/PokeInfo/index'
 
 export default function Home() {
 
   return (
     <div>
-      <Hero />
+      <PokeInfo />
     </div>
   )
 }

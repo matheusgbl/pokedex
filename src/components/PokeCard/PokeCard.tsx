@@ -5,6 +5,7 @@ import { colorTypeGradients } from '../../utils/utils';
 import Image from 'next/image';
 
 import { Container, Card } from './styles';
+import Link from 'next/link';
 
 type PokeCardProps = {
   id: string,
@@ -35,6 +36,7 @@ export const PokeCard = (
 
     return (
       <Container key={id}>
+          <Link href='/pokemonInfo' passHref={true}>
         <Card
           style={
             { 
@@ -71,6 +73,7 @@ export const PokeCard = (
           ))}
           </div>
         </Card>
+        </Link>
       </Container>
     );
 }

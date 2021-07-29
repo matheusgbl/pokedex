@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import api from '../../services/api';
+import { Header } from '../Header/Header'
 import { PokeCard } from '../PokeCard/PokeCard';
 import { Container, Content } from './styles';
 
@@ -40,18 +41,23 @@ export const Hero = () => {
 
   const pokemonsObjects = Object.keys(allPokemons);
   return (
-    <Container>
-    {pokemonsObjects.map((poke) => (
-      <Content key={allPokemons[poke].id}>
-        <PokeCard
-          id={allPokemons[poke].id}
-          image={allPokemons[poke].sprites.other.dream_world.front_default}
-          name={allPokemons[poke].name}
-          type={allPokemons[poke].types.map((item: pokeProps ) => item.type.name)}
-        />
-      </Content>
-    )
-    )}
-  </Container>
+    <>
+      <Header />
+        <Container>
+        {pokemonsObjects.map((poke) => (
+          <Content 
+            key={allPokemons[poke].id}
+          >
+            <PokeCard
+              id={allPokemons[poke].id}
+              image={allPokemons[poke].sprites.other.dream_world.front_default}
+              name={allPokemons[poke].name}
+              type={allPokemons[poke].types.map((item: pokeProps ) => item.type.name)}
+              />
+          </Content>
+          )
+          )}
+        </Container>
+    </>
   )
 }
