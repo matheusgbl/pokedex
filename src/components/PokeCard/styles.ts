@@ -1,10 +1,12 @@
 import styled from "styled-components";
+import { motion } from 'framer-motion';
+
 
 export const Container = styled.div`
   display: flex;
 `
 
-export const Card = styled.div`
+export const Card = styled(motion.div)`
   font-family: 'Early GameBoy', sans-serif;
   padding: 20px;
   background-color: #333;
@@ -15,12 +17,10 @@ export const Card = styled.div`
   align-items: center;
   text-align: center;
   border-radius: 20px;
-  transition: all 0.2s;
+  cursor: pointer;
   
   &:hover {
-    transform: scale(1.1);
-    cursor: pointer;
-    box-shadow: 8px 8px rgba(0, 0, 0, 0.2);
+    box-shadow: 6px 6px rgba(0, 0, 0, 0.15);
   }
 
   h3 {

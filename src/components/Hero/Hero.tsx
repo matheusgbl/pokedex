@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import api from '../../services/api';
 import { Header } from '../Header/Header'
 import { PokeCard } from '../PokeCard/PokeCard';
 import { Container, Content } from './styles';
+import gsap from 'gsap';
 
 type pokeProps = {
   id: string;
@@ -25,6 +26,7 @@ export const Hero = () => {
         pokemonArr.push(result.data);
       })
     );
+    console.log(result);
     
     pokemonArr.sort((a, b) => (a.id > b.id) ? 1 : ((b.id > a.id) ? -1 : 0));
     setAllPokemons(pokemonArr);
@@ -39,7 +41,22 @@ export const Hero = () => {
     }
   }, []);
 
+  useEffect(() => {
+      gsap.timeline()
+      .fromTo('.poke_card', {
+        y: 160,
+        opacity: 0,
+      }, {
+        y: 0,
+        stagger: 0.5,
+        duration: 0.5,
+        ease: 'back',
+        opacity: 1,
+      }, '<1')
+  }, [allPokemons])
+
   const pokemonsObjects = Object.keys(allPokemons);
+  
   return (
     <>
       <Header />
@@ -53,7 +70,7 @@ export const Hero = () => {
               image={allPokemons[poke].sprites.other.dream_world.front_default}
               name={allPokemons[poke].name}
               type={allPokemons[poke].types.map((item: pokeProps ) => item.type.name)}
-              />
+            />
           </Content>
           )
           )}
