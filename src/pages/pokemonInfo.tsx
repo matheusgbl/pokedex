@@ -1,11 +1,7 @@
-import React from 'react'
-import { PokeInfo } from '../components/PokeInfo/index'
+import React from 'react';
 
-export default function Home() {
+import { Container } from '~/styles/pages/pokeInfo';
 
-  return (
-    <div>
-      <PokeInfo />
-    </div>
-  )
+export default function PokeInfo() {
+  return <Container>PokéInfo</Container>;
 }

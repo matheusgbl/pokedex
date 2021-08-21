@@ -1,12 +1,10 @@
-import styled from "styled-components";
-import { motion } from 'framer-motion';
-
+import styled from 'styled-components';
 
 export const Container = styled.div`
   display: flex;
-`
+`;
 
-export const Card = styled(motion.div)`
+export const Card = styled.div`
   font-family: 'Early GameBoy', sans-serif;
   padding: 20px;
   background-color: #333;
@@ -18,13 +16,20 @@ export const Card = styled(motion.div)`
   text-align: center;
   border-radius: 20px;
   cursor: pointer;
-  
+  transition: all 0.5s;
+  box-shadow: 0 1.6px 1.6px rgb(0 0 0 / 2%), 0 3.8px 3.8px rgb(0 0 0 / 3%),
+    0 6.9px 6.9px rgb(0 0 0 / 4%), 0 11.4px 11.4px rgb(0 0 0 / 5%),
+    0 18.8px 18.8px rgb(0 0 0 / 6%), 0 32.8px 32.8px rgb(0 0 0 / 7%),
+    0 71px 71px rgb(0 0 0 / 9%);
+
   &:hover {
-    box-shadow: 6px 6px rgba(0, 0, 0, 0.15);
+    filter: brightness(1.15);
+    transform: scale(1.1);
   }
 
   h3 {
-    color: white;
+    color: black;
+    opacity: 0.85;
     letter-spacing: -1px;
   }
 
@@ -70,10 +75,10 @@ export const Card = styled(motion.div)`
     justify-content: center;
     align-content: center;
     align-items: center;
-    transition: 200ms all
+    transition: 200ms all;
   }
 
-  .poke-type-bg:hover{
+  .poke-type-bg:hover {
     filter: saturate(200%);
     transform: scale(1.1);
     cursor: pointer;
@@ -86,8 +91,8 @@ export const Card = styled(motion.div)`
   }
 
   .bug {
-    background: #92BC2C;
-    box-shadow: 0 0 20px #92BC2C;
+    background: #92bc2c;
+    box-shadow: 0 0 20px #92bc2c;
   }
 
   .dark {
@@ -96,82 +101,82 @@ export const Card = styled(motion.div)`
   }
 
   .dragon {
-    background: #0C69C8;
-    box-shadow: 0 0 20px #0C69C8;
+    background: #0c69c8;
+    box-shadow: 0 0 20px #0c69c8;
   }
 
   .electric {
-    background: #F5BC4E;
-    box-shadow: 0 0 20px #F5BC4E;
+    background: #f5bc4e;
+    box-shadow: 0 0 20px #f5bc4e;
   }
 
   .fire {
-    background: #FBA54C;
-    box-shadow: 0 0 20px #FBA54C;
+    background: #fba54c;
+    box-shadow: 0 0 20px #fba54c;
   }
 
   .fairy {
-    background: #EE90E6;
-    box-shadow: 0 0 20px #EE90E6;
+    background: #ee90e6;
+    box-shadow: 0 0 20px #ee90e6;
   }
 
   .fighting {
-    background: #D3425F;
-    box-shadow: 0 0 20px #D3425F;
+    background: #d3425f;
+    box-shadow: 0 0 20px #d3425f;
   }
 
   .flying {
-    background: #A1BBEC;
-    box-shadow: 0 0 20px #A1BBEC;
+    background: #a1bbec;
+    box-shadow: 0 0 20px #a1bbec;
   }
 
   .ghost {
-    background: #5F6DBC;
-    box-shadow: 0 0 20px #5F6DBC;
+    background: #5f6dbc;
+    box-shadow: 0 0 20px #5f6dbc;
   }
 
   .grass {
-    background: #5FBD58;
-    box-shadow: 0 0 20px #5FBD58;
+    background: #5fbd58;
+    box-shadow: 0 0 20px #5fbd58;
   }
 
   .ground {
-    background: #DA7C4D;
-    box-shadow: 0 0 20px #DA7C4D;
+    background: #da7c4d;
+    box-shadow: 0 0 20px #da7c4d;
   }
 
   .ice {
-    background: #75D0C1;
-    box-shadow: 0 0 20px #75D0C1;
+    background: #75d0c1;
+    box-shadow: 0 0 20px #75d0c1;
   }
 
   .normal {
-    background: #A0A29F;
-    box-shadow: 0 0 20px #A0A29F;
+    background: #a0a29f;
+    box-shadow: 0 0 20px #a0a29f;
   }
 
   .poison {
-    background: #B763CF;
-    box-shadow: 0 0 20px #B763CF;
+    background: #b763cf;
+    box-shadow: 0 0 20px #b763cf;
   }
 
   .psychic {
-    background: #FA8581;
-    box-shadow: 0 0 20px #FA8581;
+    background: #fa8581;
+    box-shadow: 0 0 20px #fa8581;
   }
 
   .rock {
-    background: #C9BB8A;
-    box-shadow: 0 0 20px #C9BB8A;
+    background: #c9bb8a;
+    box-shadow: 0 0 20px #c9bb8a;
   }
 
   .steel {
-    background: #5695A3;
-    box-shadow: 0 0 20px #5695A3;
+    background: #5695a3;
+    box-shadow: 0 0 20px #5695a3;
   }
 
   .water {
-    background: #539DDF;
-    box-shadow: 0 0 20px #539DDF;
+    background: #539ddf;
+    box-shadow: 0 0 20px #539ddf;
   }
-`
+`;
