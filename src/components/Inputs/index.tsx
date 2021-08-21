@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { AiOutlineSearch } from 'react-icons/ai';
 
 import api from '~/services/api';
 
@@ -11,7 +10,12 @@ type InputProps = {
   offset: number;
 };
 
-export const Inputs: React.FC = () => {
+type ChangeValue = {
+  onChangeValue: (value: string) => void;
+  value: string;
+};
+
+export const Inputs: React.FC<ChangeValue> = ({ onChangeValue, value }) => {
   const [regions] = useState<InputProps[]>([
     {
       name: 'Kanto',
@@ -64,8 +68,9 @@ export const Inputs: React.FC = () => {
   return (
     <Container>
       <label htmlFor="pokemon_regions">
-        Filter by region:{' '}
+        REGION:
         <select name="Regions" id="pokemon_regions">
+          <option>Select region</option>
           {regions.map(({ name, offset, limit }) => (
             <option key={name} value={name}>
               {name}&nbsp;({offset + 1} - {limit + offset})
@@ -75,8 +80,9 @@ export const Inputs: React.FC = () => {
       </label>
 
       <label htmlFor="pokemon_types">
-        Filter by type:{' '}
+        TYPE:
         <select name="Types" id="pokemon_types">
+          <option>All types</option>
           {types.map(({ name }) => (
             <option key={name} value={name}>
               {name}
@@ -86,8 +92,9 @@ export const Inputs: React.FC = () => {
       </label>
 
       <label htmlFor="pokemon_sort">
-        Order by:{' '}
+        ORDER BY:
         <select name="Sort" id="pokemon_sort">
+          <option>Select one</option>
           {sort.map(sorted => (
             <option key={sorted} value={sorted}>
               {sorted}
@@ -97,9 +104,14 @@ export const Inputs: React.FC = () => {
       </label>
 
       <label htmlFor="pokemon_search">
-        Search by name:{' '}
-        <input type="text" id="pokemon_search" placeholder="Search pokémon" />
-        <AiOutlineSearch />
+        SEARCH:
+        <input
+          onChange={e => onChangeValue(e.target.value)}
+          value={value}
+          type="text"
+          id="pokemon_search"
+          placeholder="Search pokémon"
+        />
       </label>
     </Container>
   );

@@ -5,11 +5,13 @@ export const Container = styled.div`
   display: flex;
   flex: 1;
   justify-content: space-evenly;
+  font-family: 'Early GameBoy', sans-serif;
 
   label {
-    font-size: 18px;
+    font-size: 16px;
     color: white;
     font-weight: 600;
+    text-align: center;
   }
 
   select,
@@ -22,14 +24,16 @@ export const Container = styled.div`
   option {
     outline: none;
     margin-bottom: 1.5rem;
+    margin-top: 0.5rem;
     border: none;
     border-radius: 5px;
     height: 1.3rem;
     text-indent: 0.3rem;
     width: 10rem;
+    display: flex;
   }
 
-  svg {
+  /* svg {
     position: relative;
     right: 1.3rem;
     top: 0.4rem;
@@ -44,5 +48,5 @@ export const Container = styled.div`
       cursor: pointer;
       filter: brightness(1.1);
     }
-  }
+  } */
 `;
