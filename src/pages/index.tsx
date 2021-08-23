@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 
 import gsap from 'gsap';
+import { InferGetStaticPropsType } from 'next';
 
+import { PokeFilter } from '~/components/Filters/PokeFilter';
 import { Header } from '~/components/Header/Header';
-import { Inputs } from '~/components/Inputs';
 import { PokeCard } from '~/components/PokeCard/PokeCard';
+import { PokeSearch } from '~/components/SearchBar/PokeSearch';
 import api from '~/services/api';
-import { Container, Content } from '~/styles/pages/home';
+import { Container, FilterAndSearch, Content } from '~/styles/pages/home';
 
 type pokeProps = {
   id: string;
@@ -15,17 +17,11 @@ type pokeProps = {
   type: {
     name: string;
   };
+  types: [];
+  sprites: any;
 };
 
-const Home = () => {
-  const [allPokemons, setAllPokemons] = useState<pokeProps[]>([]);
-  const [search, setSearch] = useState('');
-  const [searched, setSearched] = useState(false);
-  const [searchPokemons, setSearchPokemons] = useState<pokeProps[]>([]);
-  // const [selectedRegion, setSelectedRegion] = useState('');
-  // const [selectedType, setSelectedType] = useState('');
-  // const [isOrdered, setIsOrdered] = useState('');
-
+export const getStaticProps = async () => {
   const getPokemonData = async (result: any) => {
     const pokemonArr: any[] = [];
 
@@ -37,28 +33,62 @@ const Home = () => {
     );
 
     pokemonArr.sort((a, b) => (a.id > b.id ? 1 : b.id > a.id ? -1 : 0));
-    setAllPokemons(pokemonArr);
+    return pokemonArr;
+  };
+  const res = await api.get('/pokemon?limit=151&offset=0');
+  const pokemons: pokeProps[] = await getPokemonData(res.data.results);
+
+  return {
+    props: {
+      pokemons,
+    },
+  };
+};
+
+const Home = ({ pokemons }: InferGetStaticPropsType<typeof getStaticProps>) => {
+  const [allPokemons] = useState(pokemons);
+  const [searchPokemons, setSearchPokemons] = useState(pokemons);
+  const [typePokemons, setTypePokemons] = useState(pokemons);
+
+  const [search, setSearch] = useState('');
+  const [typeFilter, setTypefilter] = useState('');
+
+  const [searched, setSearched] = useState(false);
+  const [filteredType, setFilteredType] = useState(false);
+
+  const handleSearch = async (input: string) => {
+    const filtered = allPokemons.filter(poke => {
+      return poke.name.toLowerCase().includes(input.toLowerCase());
+    });
+    setSearch(input);
+    setSearchPokemons(filtered);
+    setSearched(true);
+    setFilteredType(false);
+    setTypefilter('All types');
+  };
+
+  const handleType = async (input: string) => {
+    const filtered = allPokemons.filter(poke =>
+      poke.types.map((item: pokeProps) => item.type.name).includes(input)
+    );
+    setTypefilter(input);
+    setTypePokemons(filtered);
+    setFilteredType(true);
+    setSearched(false);
   };
 
   useEffect(() => {
-    try {
-      api
-        .get('/pokemon?limit=151&offset=0')
-        .then(response => getPokemonData(response.data.results));
-    } catch (err) {
-      console.log(err);
-    }
-  }, []);
-
-  useEffect(() => {
-    gsap.timeline().fromTo(
+    const tl = gsap.timeline();
+    tl.fromTo(
       '.poke_card',
       {
-        y: 160,
+        y: 260,
+        scale: 1.5,
         opacity: 0,
       },
       {
         y: 0,
+        scale: 1,
         stagger: 0.5,
         duration: 0.5,
         ease: 'back',
@@ -68,49 +98,49 @@ const Home = () => {
     );
   }, []);
 
-  const handleSearch = async (input: string) => {
-    const filtered = allPokemons.filter(poke => {
-      return poke.name.toLowerCase().includes(input.toLowerCase());
-    });
-    setSearch(input);
-    setSearchPokemons(filtered);
-    setSearched(true);
-  };
-
-  const pokemonsObjects = Object.keys(allPokemons);
-  const pokemonsSearch = Object.keys(searchPokemons);
+  useEffect(() => {
+    if (typeFilter === 'All types') {
+      setTypePokemons(allPokemons);
+    }
+  }, [allPokemons, typeFilter]);
 
   return (
     <>
       <Header />
-      <Inputs value={search} onChangeValue={handleSearch} />
+      <FilterAndSearch>
+        <PokeFilter value={typeFilter} onChangeValue={handleType} />
+        <PokeSearch value={search} onChangeValue={handleSearch} />
+      </FilterAndSearch>
       <Container>
-        {!searched
-          ? pokemonsObjects.map(poke => (
-              <Content key={allPokemons[poke].id}>
+        {searched
+          ? searchPokemons.map(poke => (
+              <Content key={poke.id}>
                 <PokeCard
-                  id={allPokemons[poke].id}
-                  image={
-                    allPokemons[poke].sprites.other.dream_world.front_default
-                  }
-                  name={allPokemons[poke].name}
-                  type={allPokemons[poke].types.map(
-                    (item: pokeProps) => item.type.name
-                  )}
+                  id={poke.id}
+                  image={poke.sprites.other.dream_world.front_default}
+                  name={poke.name}
+                  type={poke.types.map((item: pokeProps) => item.type.name)}
                 />
               </Content>
             ))
-          : pokemonsSearch.map(poke => (
-              <Content key={searchPokemons[poke].id}>
+          : filteredType
+          ? typePokemons.map(poke => (
+              <Content key={poke.id}>
                 <PokeCard
-                  id={searchPokemons[poke].id}
-                  image={
-                    searchPokemons[poke].sprites.other.dream_world.front_default
-                  }
-                  name={searchPokemons[poke].name}
-                  type={searchPokemons[poke].types.map(
-                    (item: pokeProps) => item.type.name
-                  )}
+                  id={poke.id}
+                  image={poke.sprites.other.dream_world.front_default}
+                  name={poke.name}
+                  type={poke.types.map((item: pokeProps) => item.type.name)}
+                />
+              </Content>
+            ))
+          : allPokemons.map(poke => (
+              <Content key={poke.id}>
+                <PokeCard
+                  id={poke.id}
+                  image={poke.sprites.other.dream_world.front_default}
+                  name={poke.name}
+                  type={poke.types.map((item: pokeProps) => item.type.name)}
                 />
               </Content>
             ))}

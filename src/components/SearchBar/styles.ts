@@ -3,8 +3,6 @@ import styled from 'styled-components';
 export const Container = styled.div`
   align-items: center;
   display: flex;
-  flex: 1;
-  justify-content: space-evenly;
   font-family: 'Early GameBoy', sans-serif;
 
   label {
@@ -14,14 +12,7 @@ export const Container = styled.div`
     text-align: center;
   }
 
-  select,
-  option {
-    text-transform: capitalize;
-  }
-
-  input,
-  select,
-  option {
+  input {
     outline: none;
     margin-bottom: 1.5rem;
     margin-top: 0.5rem;
@@ -33,20 +24,9 @@ export const Container = styled.div`
     display: flex;
   }
 
-  /* svg {
-    position: relative;
-    right: 1.3rem;
-    top: 0.4rem;
+  svg {
+    position: absolute;
+    margin-top: 1.85rem;
     color: black;
-    background: #ff9000;
-    height: 21px;
-    width: 36px;
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
-
-    &:hover {
-      cursor: pointer;
-      filter: brightness(1.1);
-    }
-  } */
+  }
 `;

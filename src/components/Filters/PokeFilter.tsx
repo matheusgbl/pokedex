@@ -15,7 +15,7 @@ type ChangeValue = {
   value: string;
 };
 
-export const Inputs: React.FC<ChangeValue> = ({ onChangeValue, value }) => {
+export const PokeFilter: React.FC<ChangeValue> = ({ onChangeValue, value }) => {
   const [regions] = useState<InputProps[]>([
     {
       name: 'Kanto',
@@ -70,7 +70,6 @@ export const Inputs: React.FC<ChangeValue> = ({ onChangeValue, value }) => {
       <label htmlFor="pokemon_regions">
         REGION:
         <select name="Regions" id="pokemon_regions">
-          <option>Select region</option>
           {regions.map(({ name, offset, limit }) => (
             <option key={name} value={name}>
               {name}&nbsp;({offset + 1} - {limit + offset})
@@ -81,7 +80,12 @@ export const Inputs: React.FC<ChangeValue> = ({ onChangeValue, value }) => {
 
       <label htmlFor="pokemon_types">
         TYPE:
-        <select name="Types" id="pokemon_types">
+        <select
+          onChange={e => onChangeValue(e.target.value)}
+          value={value}
+          name="Types"
+          id="pokemon_types"
+        >
           <option>All types</option>
           {types.map(({ name }) => (
             <option key={name} value={name}>
@@ -94,24 +98,12 @@ export const Inputs: React.FC<ChangeValue> = ({ onChangeValue, value }) => {
       <label htmlFor="pokemon_sort">
         ORDER BY:
         <select name="Sort" id="pokemon_sort">
-          <option>Select one</option>
           {sort.map(sorted => (
             <option key={sorted} value={sorted}>
               {sorted}
             </option>
           ))}
         </select>
-      </label>
-
-      <label htmlFor="pokemon_search">
-        SEARCH:
-        <input
-          onChange={e => onChangeValue(e.target.value)}
-          value={value}
-          type="text"
-          id="pokemon_search"
-          placeholder="Search pokémon"
-        />
       </label>
     </Container>
   );
