@@ -3,7 +3,9 @@ import React, { useEffect, useState } from 'react';
 import gsap from 'gsap';
 import { InferGetStaticPropsType } from 'next';
 
-import { PokeFilter } from '~/components/Filters/PokeFilter';
+import { PokeRegions } from '~/components/Filters/PokeRegions';
+import { PokeSortBy } from '~/components/Filters/PokeSortBy';
+import { PokeTypes } from '~/components/Filters/PokeTypes';
 import { Header } from '~/components/Header/Header';
 import { PokeCard } from '~/components/PokeCard/PokeCard';
 import { PokeSearch } from '~/components/SearchBar/PokeSearch';
@@ -19,6 +21,8 @@ type pokeProps = {
   };
   types: [];
   sprites: any;
+  limit: number;
+  offset: number;
 };
 
 export const getStaticProps = async () => {
@@ -108,7 +112,9 @@ const Home = ({ pokemons }: InferGetStaticPropsType<typeof getStaticProps>) => {
     <>
       <Header />
       <FilterAndSearch>
-        <PokeFilter value={typeFilter} onChangeValue={handleType} />
+        <PokeRegions />
+        <PokeSortBy />
+        <PokeTypes value={typeFilter} onChangeValue={handleType} />
         <PokeSearch value={search} onChangeValue={handleSearch} />
       </FilterAndSearch>
       <Container>
