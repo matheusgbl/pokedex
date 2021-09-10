@@ -6,8 +6,6 @@ import { Container } from './styles';
 
 type InputProps = {
   name: string;
-  limit: number;
-  offset: number;
 };
 
 type ChangeValue = {

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo, useMemo } from 'react';
 
 import { Tooltip, withStyles, Zoom } from '@material-ui/core';
 import Image from 'next/image';
@@ -15,8 +15,13 @@ type PokeCardProps = {
   type: string[];
 };
 
-export const PokeCard = ({ id, name, image, type }: PokeCardProps) => {
+const PokeCard = ({ id, name, image, type }: PokeCardProps) => {
   const LightTooltip = withStyles(theme => ({
+    arrow: {
+      '&:before': {
+        backgroundColor: theme.palette.common.white,
+      },
+    },
     tooltip: {
       backgroundColor: theme.palette.common.white,
       color: 'rgba(0, 0, 0, 0.87)',
@@ -73,3 +78,5 @@ export const PokeCard = ({ id, name, image, type }: PokeCardProps) => {
     </Container>
   );
 };
+
+export default memo(PokeCard);

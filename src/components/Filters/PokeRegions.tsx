@@ -8,7 +8,15 @@ type InputProps = {
   offset: number;
 };
 
-export const PokeRegions = () => {
+type ChangeValue = {
+  onChangeValue: (value: any) => void;
+  value: string;
+};
+
+export const PokeRegions: React.FC<ChangeValue> = ({
+  onChangeValue,
+  value,
+}) => {
   const [regions] = useState<InputProps[]>([
     {
       name: 'Kanto',
@@ -56,7 +64,12 @@ export const PokeRegions = () => {
     <Container>
       <label htmlFor="pokemon_regions">
         REGION:
-        <select name="Regions" id="pokemon_regions">
+        <select
+          name="Regions"
+          id="pokemon_regions"
+          onChange={e => onChangeValue(e.target.value)}
+          value={value}
+        >
           {regions.map(({ name, offset, limit }) => (
             <option key={name} value={name}>
               {name}&nbsp;({offset + 1} - {limit + offset})
