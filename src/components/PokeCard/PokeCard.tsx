@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React from 'react';
 import { MdInfoOutline } from 'react-icons/md';
 
 import { Tooltip, withStyles, Zoom } from '@material-ui/core';
@@ -41,7 +41,7 @@ const PokeCard = ({ id, name, image, type }: PokeCardProps) => {
 
   return (
     <Container className="poke_card" key={id}>
-      <Link href="/pokemonInfo" passHref={true}>
+      <Link href={`pokemonInfo/${id}`} passHref={true}>
         <Card
           style={{
             background: `linear-gradient(${finalColor[0]}, ${finalColor[1]})`,
@@ -81,4 +81,4 @@ const PokeCard = ({ id, name, image, type }: PokeCardProps) => {
   );
 };
 
-export default memo(PokeCard);
+export default PokeCard;

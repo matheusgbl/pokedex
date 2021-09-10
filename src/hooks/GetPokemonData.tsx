@@ -66,9 +66,11 @@ export default function GetPokemonData() {
       offset: 809,
     },
   ]);
+
   const [search, setSearch] = useState('');
   const [typeFilter, setTypefilter] = useState('');
   const [selectedRegion, setSelectedRegion] = useState('');
+  const [sortBy, setSortBy] = useState('');
 
   const [isFiltered, setIsFiltered] = useState(false);
 
@@ -118,6 +120,19 @@ export default function GetPokemonData() {
     [regions]
   );
 
+  const handleSort = useCallback(
+    async input => {
+      const filterResult = allPokemons.sort((a, b) =>
+        a.name > b.name ? 1 : b.name > a.name ? -1 : 0
+      );
+
+      setSortBy(input);
+      setFilteredPokemons(filterResult);
+      setIsFiltered(true);
+    },
+    [allPokemons]
+  );
+
   useEffect(() => {
     const getPokemonData = async (result: any) => {
       const pokemonArr: any[] = [];
@@ -161,8 +176,10 @@ export default function GetPokemonData() {
     typeFilter,
     selectedRegion,
     isFiltered,
+    sortBy,
     handleSearch,
     handleType,
     handleRegion,
+    handleSort,
   };
 }

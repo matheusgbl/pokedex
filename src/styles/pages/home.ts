@@ -8,9 +8,15 @@ export const Container = styled.div`
   padding: 10px 100px;
 `;
 
-export const AnimationContainer = styled(motion.ul)``;
+export const Content = styled.div`
+  list-style: none;
+  .img__thumbnail {
+    width: 120px;
+    height: 120px;
+  }
+`;
 
-export const Content = styled(motion.li)`
+export const ContentAnimated = styled(motion.div)`
   list-style: none;
   .img__thumbnail {
     width: 120px;
