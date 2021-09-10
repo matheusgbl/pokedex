@@ -1,4 +1,4 @@
-import React, { memo, useMemo } from 'react';
+import React, { memo } from 'react';
 
 import { Tooltip, withStyles, Zoom } from '@material-ui/core';
 import Image from 'next/image';

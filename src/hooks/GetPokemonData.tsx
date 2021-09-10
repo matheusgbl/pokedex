@@ -133,6 +133,18 @@ export default function GetPokemonData() {
     response();
   }, [limit, offset]);
 
+  useEffect(() => {
+    if (typeFilter === 'All Types') {
+      setTypefilter('');
+    }
+  }, [typeFilter]);
+
+  useEffect(() => {
+    if (typeFilter === 'All types') {
+      setIsFiltered(false);
+    }
+  }, [setIsFiltered, typeFilter]);
+
   return {
     allPokemons,
     filteredPokemons,
