@@ -15,7 +15,6 @@ export const Card = styled.div`
   align-items: center;
   text-align: center;
   border-radius: 20px;
-  cursor: pointer;
   transition: all 0.5s;
   box-shadow: 0 1.6px 1.6px rgb(0 0 0 / 2%), 0 3.8px 3.8px rgb(0 0 0 / 3%),
     0 6.9px 6.9px rgb(0 0 0 / 4%), 0 11.4px 11.4px rgb(0 0 0 / 5%),
@@ -25,16 +24,16 @@ export const Card = styled.div`
   &:hover {
     filter: brightness(1.15);
     transform: scale(1.1);
+    cursor: pointer;
   }
 
   h3 {
     color: black;
-    opacity: 0.85;
+    opacity: 0.95;
     letter-spacing: -1px;
-  }
-
-  h3::first-letter {
-    text-transform: capitalize;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 100%;
   }
 
   p {
@@ -57,6 +56,14 @@ export const Card = styled.div`
     text-align: left;
     font-weight: 600;
     margin-bottom: 10px;
+    align-items: center;
+  }
+
+  .info-icon {
+    position: absolute;
+    margin-top: -35px;
+    margin-left: 140px;
+    color: white;
   }
 
   .poke-type {
@@ -81,7 +88,6 @@ export const Card = styled.div`
   .poke-type-bg:hover {
     filter: saturate(200%);
     transform: scale(1.1);
-    cursor: pointer;
   }
 
   .poke-type-bg img {

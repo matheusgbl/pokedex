@@ -47,7 +47,10 @@ const Home = () => {
         <Content key={poke.id}>
           <PokeCard
             id={poke.id}
-            image={poke.sprites.other.dream_world.front_default}
+            image={
+              poke.sprites.other.dream_world.front_default ||
+              poke.sprites.other['official-artwork'].front_default
+            }
             name={poke.name}
             type={poke.types.map((item: pokeProps) => item.type.name)}
           />
@@ -58,7 +61,10 @@ const Home = () => {
       <Content key={poke.id} custom={index} animate={controls}>
         <PokeCard
           id={poke.id}
-          image={poke.sprites.other.dream_world.front_default}
+          image={
+            poke.sprites.other.dream_world.front_default ||
+            poke.sprites.other['official-artwork'].front_default
+          }
           name={poke.name}
           type={poke.types.map((item: pokeProps) => item.type.name)}
         />

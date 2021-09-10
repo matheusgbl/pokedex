@@ -1,5 +1,5 @@
 import React from 'react';
-import { AiOutlineSearch } from 'react-icons/ai';
+import { MdSearch } from 'react-icons/md';
 
 import { Container } from './styles';
 
@@ -13,7 +13,7 @@ export const PokeSearch: React.FC<ChangeValue> = ({ onChangeValue, value }) => {
     <Container>
       <label htmlFor="pokemon_search">
         SEARCH:
-        <AiOutlineSearch />
+        <MdSearch />
         <input
           onChange={e => onChangeValue(e.target.value)}
           value={value}

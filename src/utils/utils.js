@@ -51,13 +51,16 @@ export const colorTypeGradients = (type1, type2, length) => {
       color2 = lighten(0.1, '#92BC2C');
       break;
     case 'rock':
-      color1 = darken(0.2, '#C9BB8A');
+      color1 = darken(0.25, '#C9BB8A');
+      color2 = lighten(0.2, '#C9BB8A');
       break;
     case 'ghost':
       color1 = darken(0.2, '#5F6DBC');
+      color2 = lighten(0.1, '#5F6DBC');
       break;
     case 'dark':
       color1 = darken(0.35, '#595761');
+      color2 = darken(0.05, '#595761');
       break;
     case 'dragon':
       color1 = darken(0.1, '#0C69C8');
@@ -65,6 +68,7 @@ export const colorTypeGradients = (type1, type2, length) => {
       break;
     case 'steel':
       color1 = darken(0.35, '#5695A3');
+      color2 = lighten(0.25, '#5695A3');
       break;
     case 'fairy':
       color1 = darken(0.1, '#EE90E6');
@@ -111,19 +115,19 @@ export const colorTypeGradients = (type1, type2, length) => {
         color2 = lighten(0.1, '#FA8581');
         break;
       case 'bug':
-        color2 = darken(0.35, '#92BC2C');
+        color2 = darken(0.25, '#92BC2C');
         break;
       case 'rock':
         color2 = lighten(0.15, '#C9BB8A');
         break;
       case 'ghost':
-        color2 = darken(0.35, '#5F6DBC');
+        color2 = darken(0.25, '#5F6DBC');
         break;
       case 'dark':
-        color2 = darken(0.35, '#595761');
+        color2 = darken(0.25, '#595761');
         break;
       case 'dragon':
-        color2 = darken(0.35, '#0C69C8');
+        color2 = lighten(0.1, '#0C69C8');
         break;
       case 'steel':
         color2 = lighten(0.05, '#5695A3');

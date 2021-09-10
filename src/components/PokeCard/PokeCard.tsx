@@ -1,4 +1,5 @@
 import React, { memo } from 'react';
+import { MdInfoOutline } from 'react-icons/md';
 
 import { Tooltip, withStyles, Zoom } from '@material-ui/core';
 import Image from 'next/image';
@@ -47,6 +48,7 @@ const PokeCard = ({ id, name, image, type }: PokeCardProps) => {
           }}
         >
           <div className="poke-id"># {String(id).padStart(3, '0')}</div>
+          <MdInfoOutline className="info-icon" size={30} />
           <div className="bg-color" />
           <Image
             loading="lazy"
