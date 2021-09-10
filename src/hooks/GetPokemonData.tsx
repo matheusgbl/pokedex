@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import api from '~/services/api';
 
@@ -75,39 +75,48 @@ export default function GetPokemonData() {
   const [limit, setLimit] = useState('151');
   const [offset, setOffset] = useState('0');
 
-  const handleSearch = (input: string) => {
-    const searchResult = allPokemons.filter(poke => {
-      return poke.name.toLowerCase().includes(input.toLowerCase());
-    });
-    setSearch(input);
-    setFilteredPokemons(searchResult);
-    setIsFiltered(true);
-  };
+  const handleSearch = useCallback(
+    async input => {
+      const searchResult = allPokemons.filter(poke => {
+        return poke.name.toLowerCase().includes(input.toLowerCase());
+      });
+      setSearch(input);
+      setFilteredPokemons(searchResult);
+      setIsFiltered(true);
+    },
+    [allPokemons]
+  );
 
-  const handleType = async (input: string) => {
-    const filterResult = allPokemons.filter(poke =>
-      poke.types.map((item: pokeProps) => item.type.name).includes(input)
-    );
-    setTypefilter(input);
-    setFilteredPokemons(filterResult);
-    setIsFiltered(true);
-  };
+  const handleType = useCallback(
+    async input => {
+      const filterResult = allPokemons.filter(poke =>
+        poke.types.map((item: pokeProps) => item.type.name).includes(input)
+      );
+      setTypefilter(input);
+      setFilteredPokemons(filterResult);
+      setIsFiltered(true);
+    },
+    [allPokemons]
+  );
 
-  const handleRegion = async (input: string) => {
-    const resultLimit = regions
-      .filter(region => region.name === input)
-      .map(item => item.limit)
-      .toString();
+  const handleRegion = useCallback(
+    async input => {
+      const resultLimit = regions
+        .filter(region => region.name === input)
+        .map(item => item.limit)
+        .toString();
 
-    const resultOffset = regions
-      .filter(region => region.name === input)
-      .map(item => item.offset)
-      .toString();
+      const resultOffset = regions
+        .filter(region => region.name === input)
+        .map(item => item.offset)
+        .toString();
 
-    setLimit(resultLimit);
-    setOffset(resultOffset);
-    setSelectedRegion(input);
-  };
+      setLimit(resultLimit);
+      setOffset(resultOffset);
+      setSelectedRegion(input);
+    },
+    [regions]
+  );
 
   useEffect(() => {
     const getPokemonData = async (result: any) => {
