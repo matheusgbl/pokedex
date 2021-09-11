@@ -6,6 +6,7 @@ import { PokeRegions } from '~/components/Filters/PokeRegions';
 import { PokeSortBy } from '~/components/Filters/PokeSortBy';
 import { PokeTypes } from '~/components/Filters/PokeTypes';
 import { Header } from '~/components/Header/Header';
+import { PokeLoading } from '~/components/Loading/PokeLoading';
 import PokeCard from '~/components/PokeCard/PokeCard';
 import { PokeSearch } from '~/components/SearchBar/PokeSearch';
 import GetPokemonData, { pokeProps } from '~/hooks/GetPokemonData';
@@ -31,6 +32,7 @@ const Home = () => {
     handleSearch,
     sortBy,
     handleSort,
+    isLoading,
   } = GetPokemonData();
 
   const renderPokemons = () => {
@@ -83,6 +85,7 @@ const Home = () => {
   return (
     <>
       <Header />
+      <PokeLoading loading={isLoading} />
       <FilterAndSearch>
         <PokeRegions value={selectedRegion} onChangeValue={handleRegion} />
         <PokeSortBy value={sortBy} onChangeValue={handleSort} />

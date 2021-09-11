@@ -23,6 +23,7 @@ type regionsProps = {
 export default function GetPokemonData() {
   const [allPokemons, setAllPokemons] = useState<pokeProps[]>([]);
   const [filteredPokemons, setFilteredPokemons] = useState<pokeProps[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const [regions] = useState<regionsProps[]>([
     {
@@ -103,6 +104,7 @@ export default function GetPokemonData() {
 
   const handleRegion = useCallback(
     async input => {
+      setIsLoading(true);
       const resultLimit = regions
         .filter(region => region.name === input)
         .map(item => item.limit)
@@ -116,6 +118,7 @@ export default function GetPokemonData() {
       setLimit(resultLimit);
       setOffset(resultOffset);
       setSelectedRegion(input);
+      setIsLoading(false);
     },
     [regions]
   );
@@ -134,6 +137,7 @@ export default function GetPokemonData() {
   );
 
   useEffect(() => {
+    setIsLoading(true);
     const getPokemonData = async (result: any) => {
       const pokemonArr: any[] = [];
 
@@ -155,6 +159,7 @@ export default function GetPokemonData() {
       setFilteredPokemons(await data);
     };
     response();
+    setIsLoading(false);
   }, [limit, offset]);
 
   useEffect(() => {
@@ -177,6 +182,7 @@ export default function GetPokemonData() {
     selectedRegion,
     isFiltered,
     sortBy,
+    isLoading,
     handleSearch,
     handleType,
     handleRegion,
