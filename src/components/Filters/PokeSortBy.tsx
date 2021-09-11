@@ -8,7 +8,7 @@ type ChangeValue = {
 };
 
 export const PokeSortBy = ({ onChangeValue, value }: ChangeValue) => {
-  const [sort] = useState(['ID', 'Name']);
+  const [sort] = useState(['id', 'name']);
 
   return (
     <Container>

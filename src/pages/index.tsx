@@ -68,31 +68,38 @@ const Home = () => {
   };
 
   useEffect(() => {
-    controls.set(index => ({
-      opacity: 0,
-      y: 260,
-      scale: 1.5,
-      transition: { delay: index * 0.5, ease: 'anticipate' },
-    }));
-    controls.start(index => ({
-      opacity: 1,
-      y: 0,
-      scale: 1,
-      transition: { delay: index * 0.5 },
-    }));
-  }, [controls, allPokemons]);
+    if (!isLoading) {
+      controls.set(index => ({
+        opacity: 0,
+        y: 260,
+        scale: 1.5,
+        transition: { delay: index * 0.5, ease: 'anticipate' },
+      }));
+      controls.start(index => ({
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        transition: { delay: index * 0.5 },
+      }));
+    }
+  }, [controls, allPokemons, isLoading]);
 
   return (
     <>
-      <Header />
-      <PokeLoading loading={isLoading} />
-      <FilterAndSearch>
-        <PokeRegions value={selectedRegion} onChangeValue={handleRegion} />
-        <PokeSortBy value={sortBy} onChangeValue={handleSort} />
-        <PokeTypes value={typeFilter} onChangeValue={handleType} />
-        <PokeSearch value={search} onChangeValue={handleSearch} />
-      </FilterAndSearch>
-      <Container>{renderPokemons()}</Container>
+      {isLoading ? (
+        <PokeLoading />
+      ) : (
+        <>
+          <Header />
+          <FilterAndSearch>
+            <PokeRegions value={selectedRegion} onChangeValue={handleRegion} />
+            <PokeSortBy value={sortBy} onChangeValue={handleSort} />
+            <PokeTypes value={typeFilter} onChangeValue={handleType} />
+            <PokeSearch value={search} onChangeValue={handleSearch} />
+          </FilterAndSearch>
+          <Container>{renderPokemons()}</Container>
+        </>
+      )}
     </>
   );
 };

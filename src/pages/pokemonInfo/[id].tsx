@@ -1,12 +1,27 @@
 import React from 'react';
 
-import { useRouter } from 'next/dist/client/router';
+import { NextPage } from 'next';
 
+interface Props {
+  pokemons?: any[];
+}
+
+import { pokeProps } from '~/hooks/GetPokemonData';
+import api from '~/services/api';
 import { Container } from '~/styles/pages/pokeInfo';
 
-export default function PokeInfo() {
-  const router = useRouter();
-  const id = router.query.id || [];
+const PokeInfo: NextPage<Props> = ({ pokemons }) => {
+  const { name } = pokemons;
 
-  return <Container>PokéInfo: {id}</Container>;
-}
+  return <Container>PokéInfo: {name}</Container>;
+};
+
+PokeInfo.getInitialProps = async ({ query }) => {
+  const { id } = query;
+
+  const res = await api.get(`/pokemon/${id}`);
+  const pokemons: pokeProps[] = await res.data;
+  return { pokemons };
+};
+
+export default PokeInfo;

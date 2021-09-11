@@ -8,4 +8,9 @@ export const Container = styled.div`
   letter-spacing: 2px;
   text-align: center;
   align-items: center;
+  position: absolute;
+  width: 100%;
+  margin: auto;
+  top: 50%;
+  transform: translateY(-50%);
 `;
