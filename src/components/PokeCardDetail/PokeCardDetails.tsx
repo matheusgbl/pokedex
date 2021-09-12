@@ -10,6 +10,8 @@ type DetailsProps = {
   image: any;
   hp: string;
   attack: string;
+  genera: string;
+  about: string;
   defense: string;
   abilities: string[];
   weight: number;
@@ -21,6 +23,8 @@ export const PokeCardDetails = ({
   name,
   id,
   image,
+  genera,
+  about,
   hp,
   attack,
   defense,
@@ -39,6 +43,8 @@ export const PokeCardDetails = ({
         height={100}
       />
       <p>{name}</p>
+      <p>{genera}</p>
+      <p>{about}</p>
       <p>Base stats</p>
       <p>HP: {hp}</p>
       <p>ATTACK: {attack}</p>
