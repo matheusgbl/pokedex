@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import api from '~/services/api';
+import { api } from '~/services/api';
 
 export type pokeProps = {
   id: string;
@@ -141,8 +141,8 @@ export default function GetPokemonData() {
 
       await Promise.all(
         result.map(async (pokemon: { name: string }) => {
-          const result = await api.get(`/pokemon/${pokemon.name}`);
-          pokemonArr.push(result.data);
+          const result = await api.getPokemonByName(pokemon.name);
+          pokemonArr.push(result);
         })
       );
 
@@ -151,8 +151,12 @@ export default function GetPokemonData() {
     };
 
     const response = async () => {
-      const res = await api.get(`/pokemon?limit=${limit}&offset=${offset}`);
-      const data = getPokemonData(res.data.results);
+      const interval = {
+        limit: limit,
+        offset: offset,
+      };
+      const res = await api.getPokemonsList(interval);
+      const data = getPokemonData(res.results);
       setAllPokemons(await data);
       setFilteredPokemons(await data);
       setIsLoading(false);
