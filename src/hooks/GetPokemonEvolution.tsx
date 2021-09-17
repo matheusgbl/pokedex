@@ -44,7 +44,6 @@ export default function GetPokemonEvolution(
         const response = result[i].species.name;
         const evoDetails = await api.getPokemonByName(response.toString());
         pokemonArr.push(evoDetails);
-        console.log(result);
 
         if (result[i].evolves_to.length >= 1) {
           const pokeEvolves = result[i].evolves_to[i].species.name;

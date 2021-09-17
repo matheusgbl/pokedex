@@ -17,6 +17,7 @@ interface Props {
     moves: [];
     height: number;
     weight: number;
+    types: string[];
   };
   species: {
     genera: any[];
@@ -26,7 +27,7 @@ interface Props {
 }
 
 const PokeInfo: NextPage<Props> = ({ pokemons, species }) => {
-  const { name, sprites, id, stats, abilities, moves, height, weight } =
+  const { name, sprites, id, stats, abilities, moves, height, weight, types } =
     pokemons;
 
   const { genera, flavor_text_entries, evolution_chain } = species;
@@ -44,12 +45,8 @@ const PokeInfo: NextPage<Props> = ({ pokemons, species }) => {
         attack={stats[1].base_stat}
         defense={stats[2].base_stat}
         hp={stats[0].base_stat}
-        abilities={abilities.map(
-          (item: { ability: { name: string } }) => item.ability.name + ' '
-        )}
-        moves={moves
-          .slice(0, 6)
-          .map((item: { move: { name: string } }) => item.move.name + ' ')}
+        abilities={abilities}
+        moves={moves}
         height={height}
         weight={weight}
         genera={pokemonGenera}
@@ -57,6 +54,7 @@ const PokeInfo: NextPage<Props> = ({ pokemons, species }) => {
           .replace('', ' ')
           .replace('POKéMON', 'POKÉMON')}
         evoImg={as}
+        type={types.map(item => item.type.name)}
       />
     </Container>
   );
