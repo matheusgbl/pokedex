@@ -3,6 +3,7 @@ import React from 'react';
 import { NextPage } from 'next';
 
 import { PokeCardDetails } from '~/components/PokeCardDetail/PokeCardDetails';
+import GetPokemonEvolution from '~/hooks/GetPokemonEvolution';
 import { api } from '~/services/api';
 import { Container } from '~/styles/pages/pokeInfo';
 
@@ -20,51 +21,17 @@ interface Props {
   species: {
     genera: any[];
     flavor_text_entries: any[];
-  };
-  evolution: {
-    chain: {
-      evolves_to: any[];
-    };
+    evolution_chain: any;
   };
 }
 
-const PokeInfo: NextPage<Props> = ({ pokemons, species, evolution }) => {
+const PokeInfo: NextPage<Props> = ({ pokemons, species }) => {
   const { name, sprites, id, stats, abilities, moves, height, weight } =
     pokemons;
 
-  const { genera, flavor_text_entries } = species;
+  const { genera, flavor_text_entries, evolution_chain } = species;
 
-  const { evolves_to } = evolution.chain;
-
-  function getPokemonEvolution(pokemonEvolution: any[]) {
-    const evoArr = [];
-    for (let i = 0; i < pokemonEvolution.length; i++) {
-      const pokemonProperties = Object.prototype.hasOwnProperty.call(
-        pokemonEvolution[i],
-        'evolves_to'
-      );
-      if (pokemonProperties) {
-        const result = pokemonEvolution.map(
-          item => item.evolves_to[i].species.name
-        );
-        evoArr.push({
-          evoName: result.toString(),
-        });
-      }
-      const result = pokemonEvolution.map(item => item.species.name);
-      evoArr.push({
-        evoName: result.toString(),
-      });
-    }
-    return evoArr;
-  }
-
-  console.log(getPokemonEvolution(evolves_to));
-
-  const pokemonGenera = genera
-    .filter(item => item.language.name === 'en')
-    .map(item => item.genus)
-    .toString();
+  const { pokemonGenera, as } = GetPokemonEvolution(genera, evolution_chain);
 
   return (
     <Container>
@@ -89,6 +56,7 @@ const PokeInfo: NextPage<Props> = ({ pokemons, species, evolution }) => {
         about={flavor_text_entries[0].flavor_text
           .replace('', ' ')
           .replace('POKéMON', 'POKÉMON')}
+        evoImg={as}
       />
     </Container>
   );
@@ -99,11 +67,9 @@ PokeInfo.getInitialProps = async ({ query }) => {
 
   const details = await api.getPokemonByName(id);
   const specieDetail = await api.getPokemonSpeciesByName(id);
-  const evoChain = await api.getEvolutionChainById(id);
   const pokemons = await details;
   const species = await specieDetail;
-  const evolution = await evoChain;
-  return { pokemons, species, evolution };
+  return { pokemons, species };
 };
 
 export default PokeInfo;

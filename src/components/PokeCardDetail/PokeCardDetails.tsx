@@ -17,6 +17,7 @@ type DetailsProps = {
   weight: number;
   height: number;
   moves: string[];
+  evoImg: any[];
 };
 
 export const PokeCardDetails = ({
@@ -32,6 +33,7 @@ export const PokeCardDetails = ({
   moves,
   weight,
   height,
+  evoImg,
 }: DetailsProps) => {
   return (
     <Container>
@@ -61,6 +63,20 @@ export const PokeCardDetails = ({
       <p>
         {(height / 10).toFixed(1)} m / {((height / 10) * 3.281).toFixed(1)} ft
       </p>
+      <div>
+        {evoImg.map(item => (
+          <Image
+            key={item.id}
+            src={item.sprites.other.dream_world.front_default}
+            alt={`pokemon image`}
+            width={100}
+            height={100}
+            loading="lazy"
+            blurDataURL={image}
+            placeholder="blur"
+          />
+        ))}
+      </div>
     </Container>
   );
 };
