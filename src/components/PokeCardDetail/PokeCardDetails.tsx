@@ -14,9 +14,10 @@ import {
   CardContent,
   BasicInfo,
   Status,
+  Types,
   BaseStats,
-  AboutName,
-  InfoAndAbilityContent,
+  About,
+  SecondContentInfo,
   Abilities,
   Moves,
   OtherStats,
@@ -26,17 +27,40 @@ import {
 type DetailsProps = {
   name: string;
   id: number;
-  image: any;
+  image: string;
   hp: string;
   attack: string;
   genera: string;
   about: string;
   defense: string;
-  abilities: any[];
+  abilities: [
+    {
+      ability: {
+        name: string;
+      };
+    }
+  ];
   weight: number;
   height: number;
-  moves: any[];
-  evoImg: any[];
+  moves: [
+    {
+      move: {
+        name: string;
+      };
+    }
+  ];
+  evoDetails: [
+    {
+      id: string;
+      sprites: {
+        other: {
+          dream_world: {
+            front_default: string;
+          };
+        };
+      };
+    }
+  ];
   type: string[];
 };
 
@@ -53,7 +77,7 @@ export const PokeCardDetails = ({
   moves,
   weight,
   height,
-  evoImg,
+  evoDetails,
   type,
 }: DetailsProps) => {
   let finalColor;
@@ -83,30 +107,38 @@ export const PokeCardDetails = ({
                 className="pokemon_img"
               />
             </div>
+          </Status>
+          <Types>
             <div className={`poke-type-bg-genera ${type[0]}`}>
               <p>{genera}</p>
             </div>
-          </Status>
-          <div className="poke-type">
-            {type.map(pokeType => (
-              <div key={pokeType} className={`poke-type-bg ${pokeType}`}>
-                <img src={`${pokeType}.svg`} alt="Pokemon type" />
-              </div>
-            ))}
-          </div>
+            <div className="poke-type">
+              {type.map(pokeType => (
+                <div key={pokeType} className={`poke-type-bg ${pokeType}`}>
+                  <img src={`${pokeType}.svg`} alt="Pokemon type" />
+                </div>
+              ))}
+            </div>
+          </Types>
           <BaseStats>
             <div>
               <p>
                 <AiFillHeart color="#ff1f1f" size={22} />
-                HP {hp}
+                HP
+                <br />
+                {hp}
               </p>
               <p>
                 <GiPunchBlast color="#fff" size={22} />
-                Attack {attack}
+                Attack
+                <br />
+                {attack}
               </p>
               <p>
                 <BsShieldShaded color="#0f74e7" size={22} />
-                Defense {defense}
+                Defense
+                <br />
+                {defense}
               </p>
             </div>
           </BaseStats>
@@ -123,11 +155,11 @@ export const PokeCardDetails = ({
             </p>
           </OtherStats>
         </BasicInfo>
-        <InfoAndAbilityContent>
-          <AboutName>
+        <SecondContentInfo>
+          <About>
             <h2>About</h2>
             <p>{about}</p>
-          </AboutName>
+          </About>
           <Abilities>
             <h2>Abilities</h2>
             <div>
@@ -147,12 +179,15 @@ export const PokeCardDetails = ({
           <EvolutionChain>
             <h2>Evolution</h2>
             <div>
-              {evoImg.map(item => (
+              {evoDetails.map(item => (
                 <>
                   <div key={item.id} className={`poke-type-bg ${type[0]}`}>
                     <Link href={`${item.id}`} passHref={true}>
                       <Image
-                        src={item.sprites.other.dream_world.front_default}
+                        src={
+                          item.sprites.other.dream_world.front_default ||
+                          item.sprites.other['official-artwork'].front_default
+                        }
                         alt={`pokemon image`}
                         width={80}
                         height={80}
@@ -167,7 +202,7 @@ export const PokeCardDetails = ({
               ))}
             </div>
           </EvolutionChain>
-        </InfoAndAbilityContent>
+        </SecondContentInfo>
       </CardContent>
     </Container>
   );

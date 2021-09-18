@@ -1,4 +1,3 @@
-import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
 export const Container = styled.main`
@@ -15,11 +14,12 @@ export const CardContent = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
+  min-width: 65vw;
   height: 100%;
 `;
 
 export const BasicInfo = styled.aside`
-  width: 32%;
+  width: 30%;
   height: 100%;
   display: flex;
   text-align: center;
@@ -28,6 +28,15 @@ export const BasicInfo = styled.aside`
   background-color: rgba(0, 0, 0, 0.6);
   border-radius: 20px 0 0 20px;
   color: white;
+`;
+
+export const Status = styled.div`
+  h2 {
+    text-align: center;
+    &::first-letter {
+      text-transform: uppercase;
+    }
+  }
 
   .pokemon_name {
     font-family: 'Early GameBoy', sans-serif;
@@ -38,7 +47,9 @@ export const BasicInfo = styled.aside`
     justify-content: center;
     margin-bottom: 20px;
   }
+`;
 
+export const Types = styled.div`
   .poke-type-bg-genera {
     width: 80%;
     height: 40px;
@@ -149,20 +160,6 @@ export const BasicInfo = styled.aside`
   }
 `;
 
-export const Status = styled.div`
-  h2 {
-    text-align: center;
-    &::first-letter {
-      text-transform: uppercase;
-    }
-  }
-
-  .pokemon_img {
-    display: flex;
-    justify-content: center;
-  }
-`;
-
 export const BaseStats = styled.div`
   div {
     display: flex;
@@ -189,9 +186,23 @@ export const OtherStats = styled.div`
   top: -30px;
 `;
 
-export const AboutName = styled.aside`
+export const SecondContentInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 100%;
+  padding: 0 80px;
+  justify-content: center;
+  color: white;
+
+  h2 {
+    font-family: 'Early GameBoy', sans-serif;
+  }
+`;
+
+export const About = styled.aside`
   & > p {
-    background-color: #444;
+    background-color: rgba(0, 0, 0, 0.4);
     border-radius: 20px;
     max-width: 40rem;
     min-height: 5rem;
@@ -202,25 +213,12 @@ export const AboutName = styled.aside`
   }
 `;
 
-export const InfoAndAbilityContent = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  width: 100%;
-  padding: 0 40px;
-  color: white;
-
-  h2 {
-    font-family: 'Early GameBoy', sans-serif;
-  }
-`;
-
 export const Abilities = styled.div`
   & > div {
     display: flex;
     justify-content: space-between;
     max-width: 18rem;
-    background-color: #444;
+    background-color: rgba(0, 0, 0, 0.4);
     border-radius: 20px;
     min-height: 4rem;
     align-items: center;
@@ -237,8 +235,8 @@ export const Moves = styled.div`
   & > div {
     display: flex;
     justify-content: space-between;
-    max-width: auto;
-    background-color: #444;
+    max-width: calc(100% - 150px);
+    background-color: rgba(0, 0, 0, 0.4);
     border-radius: 20px;
     min-height: 4rem;
     align-items: center;
@@ -251,7 +249,13 @@ export const Moves = styled.div`
   }
 `;
 
-export const EvolutionChain = styled(motion.div)`
+export const EvolutionChain = styled.div`
+  p {
+    color: black;
+    font-size: 16px;
+    font-weight: 600;
+  }
+
   .poke-type-bg {
     border-radius: 50%;
     width: 110px;
@@ -264,7 +268,7 @@ export const EvolutionChain = styled(motion.div)`
 
   div {
     display: flex;
-    max-width: 80%;
+    max-width: calc(80% - 200px);
     justify-content: space-around;
     align-items: center;
 

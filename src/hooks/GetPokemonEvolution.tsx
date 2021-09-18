@@ -12,7 +12,7 @@ export default function GetPokemonEvolution(
   const [pokemonEvoDetail, setPokemonEvoDetail] = useState<any>([]);
   const [pokeFirstEvo, setPokemonFirstEvo] = useState<any>('');
 
-  const [as, setAs] = useState<any>([]);
+  const [evolutionDetails, setEvolutionDetails] = useState<any>([]);
 
   useEffect(() => {
     const generaPokemon = genera
@@ -58,7 +58,7 @@ export default function GetPokemonEvolution(
 
     const response = async () => {
       const data = await getPokemonEvolution(pokemonEvoDetail, pokeFirstEvo);
-      setAs(data);
+      setEvolutionDetails(data);
     };
 
     response();
@@ -66,6 +66,6 @@ export default function GetPokemonEvolution(
 
   return {
     pokemonGenera,
-    as,
+    evolutionDetails,
   };
 }

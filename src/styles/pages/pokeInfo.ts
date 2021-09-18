@@ -16,4 +16,24 @@ export const Container = styled.section`
     font-family: 'Early GameBoy', sans-serif;
     color: white;
   }
+
+  .return_page {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    color: white;
+    font-family: 'Early GameBoy', sans-serif;
+    position: absolute;
+    top: 95px;
+    left: 180px;
+
+    &:hover {
+      color: red;
+      cursor: pointer;
+    }
+
+    svg {
+      margin-right: 20px;
+    }
+  }
 `;
