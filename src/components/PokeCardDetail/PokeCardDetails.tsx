@@ -5,6 +5,9 @@ import { GiPunchBlast } from 'react-icons/gi';
 import { HiArrowNarrowRight } from 'react-icons/hi';
 
 import Image from 'next/image';
+import Link from 'next/link';
+
+import { colorTypeGradients } from '~/utils/utils';
 
 import {
   Container,
@@ -53,13 +56,24 @@ export const PokeCardDetails = ({
   evoImg,
   type,
 }: DetailsProps) => {
+  let finalColor;
+
+  if (type.length === 2) {
+    finalColor = colorTypeGradients(type[0], type[1], type.length);
+  } else {
+    finalColor = colorTypeGradients(type[0], type[0], type.length);
+  }
   return (
     <Container>
-      <CardContent>
+      <CardContent
+        style={{
+          background: `linear-gradient(${finalColor[0]}, ${finalColor[1]})`,
+        }}
+      >
         <BasicInfo>
           <Status>
             <h2>NO. {String(id).padStart(3, '0')}</h2>
-            <h2>{name}</h2>
+            <h2 className="pokemon_name">{name}</h2>
             <div className="pokemon_img">
               <Image
                 src={image}
@@ -84,15 +98,15 @@ export const PokeCardDetails = ({
             <div>
               <p>
                 <AiFillHeart color="#ff1f1f" size={22} />
-                HP: {hp}
+                HP {hp}
               </p>
               <p>
                 <GiPunchBlast color="#fff" size={22} />
-                Attack: {attack}
+                Attack {attack}
               </p>
               <p>
                 <BsShieldShaded color="#0f74e7" size={22} />
-                Defense: {defense}
+                Defense {defense}
               </p>
             </div>
           </BaseStats>
@@ -118,7 +132,7 @@ export const PokeCardDetails = ({
             <h2>Abilities</h2>
             <div>
               {abilities.map(({ ability }) => (
-                <p key={ability.name}>{ability.name}</p>
+                <li key={ability.name}>{ability.name}</li>
               ))}
             </div>
           </Abilities>
@@ -126,31 +140,34 @@ export const PokeCardDetails = ({
             <h2>Main moves</h2>
             <div>
               {moves.slice(0, 6).map(({ move }) => (
-                <p key={move.name}>{move.name}</p>
+                <li key={move.name}>{move.name}</li>
               ))}
             </div>
           </Moves>
+          <EvolutionChain>
+            <h2>Evolution</h2>
+            <div>
+              {evoImg.map(item => (
+                <>
+                  <div key={item.id} className={`poke-type-bg ${type[0]}`}>
+                    <Link href={`${item.id}`} passHref={true}>
+                      <Image
+                        src={item.sprites.other.dream_world.front_default}
+                        alt={`pokemon image`}
+                        width={80}
+                        height={80}
+                        loading="lazy"
+                        blurDataURL={image}
+                        placeholder="blur"
+                      />
+                    </Link>
+                  </div>
+                  <HiArrowNarrowRight size={30} />
+                </>
+              ))}
+            </div>
+          </EvolutionChain>
         </InfoAndAbilityContent>
-        <EvolutionChain>
-          <h2>Evolvution Chain</h2>
-          <div>
-            {evoImg.map(item => (
-              <>
-                <Image
-                  key={item.id}
-                  src={item.sprites.other.dream_world.front_default}
-                  alt={`pokemon image`}
-                  width={80}
-                  height={80}
-                  loading="lazy"
-                  blurDataURL={image}
-                  placeholder="blur"
-                />
-                <HiArrowNarrowRight size={30} />
-              </>
-            ))}
-          </div>
-        </EvolutionChain>
       </CardContent>
     </Container>
   );

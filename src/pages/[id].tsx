@@ -17,7 +17,7 @@ interface Props {
     moves: [];
     height: number;
     weight: number;
-    types: string[];
+    types: any[];
   };
   species: {
     genera: any[];
@@ -36,7 +36,7 @@ const PokeInfo: NextPage<Props> = ({ pokemons, species }) => {
 
   return (
     <Container>
-      <h3>PokémonDetails</h3>
+      <h1>Pokemon Details</h1>
       <PokeCardDetails
         id={id}
         name={name}

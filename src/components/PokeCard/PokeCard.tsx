@@ -41,7 +41,7 @@ const PokeCard = ({ id, name, image, type }: PokeCardProps) => {
 
   return (
     <Container className="poke_card" key={id}>
-      <Link href={`pokemonInfo/${id}`} passHref={true}>
+      <Link href={`${id}`} passHref={true}>
         <Card
           style={{
             background: `linear-gradient(${finalColor[0]}, ${finalColor[1]})`,
@@ -61,7 +61,11 @@ const PokeCard = ({ id, name, image, type }: PokeCardProps) => {
             className="img__thumbnail"
           />
           <h3>{name}</h3>
-          <div className="poke-type">
+          <div
+            style={{
+              background: `linear-gradient(${finalColor[0]}, ${finalColor[1]})`,
+            }}
+          >
             {type.map(pokeType => (
               <LightTooltip
                 TransitionComponent={Zoom}
