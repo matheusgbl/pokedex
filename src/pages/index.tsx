@@ -10,6 +10,7 @@ import { PokeLoading } from '~/components/Loading/PokeLoading';
 import PokeCard from '~/components/PokeCard/PokeCard';
 import { PokeSearch } from '~/components/SearchBar/PokeSearch';
 import GetPokemonData, { pokeProps } from '~/hooks/GetPokemonData';
+import GetPokemonEvolution from '~/hooks/GetPokemonEvolution';
 import {
   Container,
   FilterAndSearch,
@@ -35,6 +36,8 @@ const Home = () => {
     isLoading,
   } = GetPokemonData();
 
+  const { handlePokemon, pokeSpecies, pokemonGenera } = GetPokemonEvolution();
+
   const renderPokemons = () => {
     if (isFiltered) {
       return filteredPokemons.map(poke => (
@@ -47,6 +50,7 @@ const Home = () => {
             }
             name={poke.name}
             type={poke.types.map((item: pokeProps) => item.type.name)}
+            onSelectCard={handlePokemon}
           />
         </Content>
       ));
@@ -61,6 +65,7 @@ const Home = () => {
             }
             name={poke.name}
             type={poke.types.map((item: pokeProps) => item.type.name)}
+            onSelectCard={handlePokemon}
           />
         </ContentAnimated>
       ));

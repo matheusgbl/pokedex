@@ -3,20 +3,20 @@ import { CgPokemon } from 'react-icons/cg';
 
 import { Tooltip, withStyles, Zoom } from '@material-ui/core';
 import Image from 'next/image';
-import Link from 'next/link';
 
 import { colorTypeGradients } from '~/utils/utils';
 
 import { Container, Card } from './styles';
 
 type PokeCardProps = {
-  id: string;
+  id: number;
   name: string;
   image: string;
   type: string[];
+  onSelectCard: (value: number) => void;
 };
 
-const PokeCard = ({ id, name, image, type }: PokeCardProps) => {
+const PokeCard = ({ id, name, image, type, onSelectCard }: PokeCardProps) => {
   const LightTooltip = withStyles(theme => ({
     arrow: {
       '&:before': {
@@ -41,42 +41,41 @@ const PokeCard = ({ id, name, image, type }: PokeCardProps) => {
 
   return (
     <Container className="poke_card" key={id}>
-      <Link href={`/${id}`} passHref={true}>
-        <Card
-          style={{
-            background: `linear-gradient(${finalColor[0]}, ${finalColor[1]})`,
-          }}
-        >
-          <div className="poke-id"># {String(id).padStart(3, '0')}</div>
-          <CgPokemon className="info-icon" size={30} />
-          <div className="bg-color" />
-          <Image
-            loading="lazy"
-            alt="image-pokemon"
-            height={150}
-            width={150}
-            src={image}
-            blurDataURL={image}
-            placeholder="blur"
-            className="img__thumbnail"
-          />
-          <h3>{name}</h3>
-          <div className="poke-type">
-            {type.map(pokeType => (
-              <LightTooltip
-                TransitionComponent={Zoom}
-                key={pokeType}
-                title={pokeType}
-                arrow
-              >
-                <div className={`poke-type-bg ${pokeType}`}>
-                  <img src={`${pokeType}.svg`} alt="Pokemon type" />
-                </div>
-              </LightTooltip>
-            ))}
-          </div>
-        </Card>
-      </Link>
+      <Card
+        style={{
+          background: `linear-gradient(${finalColor[0]}, ${finalColor[1]})`,
+        }}
+        onClick={() => onSelectCard(id)}
+      >
+        <div className="poke-id"># {String(id).padStart(3, '0')}</div>
+        <CgPokemon className="info-icon" size={30} />
+        <div className="bg-color" />
+        <Image
+          loading="lazy"
+          alt="image-pokemon"
+          height={150}
+          width={150}
+          src={image}
+          blurDataURL={image}
+          placeholder="blur"
+          className="img__thumbnail"
+        />
+        <h3>{name}</h3>
+        <div className="poke-type">
+          {type.map(pokeType => (
+            <LightTooltip
+              TransitionComponent={Zoom}
+              key={pokeType}
+              title={pokeType}
+              arrow
+            >
+              <div className={`poke-type-bg ${pokeType}`}>
+                <img src={`${pokeType}.svg`} alt="Pokemon type" />
+              </div>
+            </LightTooltip>
+          ))}
+        </div>
+      </Card>
     </Container>
   );
 };

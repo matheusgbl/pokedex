@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { api } from '~/services/api';
 
 export type pokeProps = {
-  id: string;
+  id: number;
   name: string;
   image: string;
   type: {
