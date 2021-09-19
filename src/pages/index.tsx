@@ -36,7 +36,9 @@ const Home = () => {
     isLoading,
   } = GetPokemonData();
 
-  const { handlePokemon, pokeSpecies, pokemonGenera } = GetPokemonEvolution();
+  const { handlePokemon, evolutionDetails } = GetPokemonEvolution();
+
+  console.log(evolutionDetails);
 
   const renderPokemons = () => {
     if (isFiltered) {

@@ -1,4 +1,10 @@
-import { SetStateAction, useCallback, useEffect, useState } from 'react';
+import {
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 
 import axios from 'axios';
 
@@ -19,12 +25,6 @@ type SpeciesProps = {
 };
 
 export default function GetPokemonEvolution() {
-  const [pokemonGenera, setPokemonGenera] = useState('');
-  const [isSelected, setIsSelected] = useState(false);
-  const [selectedPokemon, setSelectedPokemon] = useState(0);
-
-  const [pokemonEvoDetail, setPokemonEvoDetail] = useState<any>([]);
-  const [pokeFirstEvo, setPokemonFirstEvo] = useState<any>('');
   const [pokeSpecies, setPokeSpecies] = useState<SpeciesProps>({
     evolution_chain: {
       url: '',
@@ -38,9 +38,15 @@ export default function GetPokemonEvolution() {
       },
     ],
   });
+  const [pokemonGenera, setPokemonGenera] = useState('');
+  const [isSelected, setIsSelected] = useState(false);
+  const [selectedPokemon, setSelectedPokemon] = useState(0);
+
+  const [pokeFirstEvo, setPokemonFirstEvo] = useState<any>('');
+  const [pokemonEvoDetail, setPokemonEvoDetail] = useState<any>([]);
   const [evolutionDetails, setEvolutionDetails] = useState<any>([]);
 
-  const { evolution_chain, genera } = pokeSpecies;
+  const isFirstRun = useRef(true);
 
   const handlePokemon = useCallback((value: number) => {
     setSelectedPokemon(value);
@@ -48,11 +54,11 @@ export default function GetPokemonEvolution() {
   }, []);
 
   const getPokeEvos = useCallback(async () => {
-    await axios.get(evolution_chain.url).then(response => {
+    await axios.get(pokeSpecies.evolution_chain.url).then(response => {
       setPokemonFirstEvo(response.data.chain.species.name);
       setPokemonEvoDetail(response.data.chain.evolves_to);
     });
-  }, [evolution_chain.url]);
+  }, [pokeSpecies]);
 
   const getPokemonEvolution = useCallback(
     async (result: any[], firstEvo: string) => {
@@ -89,17 +95,21 @@ export default function GetPokemonEvolution() {
   }, [selectedPokemon, isSelected]);
 
   useEffect(() => {
-    const generaPokemon = genera
+    const generaPokemon = pokeSpecies.genera
       .filter(
         (item: { language: { name: string } }) => item.language.name === 'en'
       )
       .map((item: { genus: any }) => item.genus)
       .toString();
     setPokemonGenera(generaPokemon);
-  }, [genera]);
+  }, [pokeSpecies]);
 
   useEffect(() => {
     if (isSelected) {
+      if (isFirstRun.current) {
+        isFirstRun.current = false;
+        return;
+      }
       getPokeEvos();
     }
   }, [isSelected, getPokeEvos]);
