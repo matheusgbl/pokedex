@@ -61,7 +61,7 @@ type DetailsProps = {
       };
     }
   ];
-  type: string[];
+  // type: string[];
 };
 
 export const PokeCardDetails = ({
@@ -73,52 +73,54 @@ export const PokeCardDetails = ({
   hp,
   attack,
   defense,
-  abilities,
-  moves,
+  // abilities,
+  // moves,
   weight,
   height,
   evoDetails,
-  type,
-}: DetailsProps) => {
+}: // type,
+DetailsProps) => {
   let finalColor;
 
-  if (type.length === 2) {
-    finalColor = colorTypeGradients(type[0], type[1], type.length);
-  } else {
-    finalColor = colorTypeGradients(type[0], type[0], type.length);
-  }
+  // if (type.length === 2) {
+  //   finalColor = colorTypeGradients(type[0], type[1], type.length);
+  // } else {
+  //   finalColor = colorTypeGradients(type[0], type[0], type.length);
+  // }
+
+  console.log(evoDetails);
   return (
     <Container>
       <CardContent
-        style={{
-          background: `linear-gradient(${finalColor[0]}, ${finalColor[1]})`,
-        }}
+      // style={{
+      //   background: `linear-gradient(${finalColor[0]}, ${finalColor[1]})`,
+      // }}
       >
         <BasicInfo>
           <Status>
             <h2>NO. {String(id).padStart(3, '0')}</h2>
             <h2 className="pokemon_name">{name}</h2>
             <div className="pokemon_img">
-              <Image
+              {/* <Image
                 src={image}
                 alt={`pokemon ${name} image`}
                 width={150}
                 height={150}
                 className="pokemon_img"
-              />
+              /> */}
             </div>
           </Status>
           <Types>
-            <div className={`poke-type-bg-genera ${type[0]}`}>
-              <p>{genera}</p>
-            </div>
-            <div className="poke-type">
+            {/* <div className={`poke-type-bg-genera ${type[0]}`}> */}
+            <p>{genera}</p>
+            {/* </div> */}
+            {/* <div className="poke-type">
               {type.map(pokeType => (
                 <div key={pokeType} className={`poke-type-bg ${pokeType}`}>
                   <img src={`${pokeType}.svg`} alt="Pokemon type" />
                 </div>
               ))}
-            </div>
+            </div> */}
           </Types>
           <BaseStats>
             <div>
@@ -163,17 +165,17 @@ export const PokeCardDetails = ({
           <Abilities>
             <h2>Abilities</h2>
             <div>
-              {abilities.map(({ ability }) => (
+              {/* {abilities.map(({ ability }) => (
                 <li key={ability.name}>{ability.name}</li>
-              ))}
+              ))} */}
             </div>
           </Abilities>
           <Moves>
             <h2>Main moves</h2>
             <div>
-              {moves.slice(0, 6).map(({ move }) => (
+              {/* {moves.slice(0, 6).map(({ move }) => (
                 <li key={move.name}>{move.name}</li>
-              ))}
+              ))} */}
             </div>
           </Moves>
           <EvolutionChain>
@@ -181,21 +183,22 @@ export const PokeCardDetails = ({
             <div>
               {evoDetails.map(item => (
                 <>
-                  <div key={item.id} className={`poke-type-bg ${type[0]}`}>
-                    <Link href={`${item.id}`} passHref={true}>
-                      <Image
-                        src={
-                          item.sprites.other.dream_world.front_default ||
-                          item.sprites.other['official-artwork'].front_default
-                        }
-                        alt={`pokemon image`}
-                        width={80}
-                        height={80}
-                        loading="lazy"
-                        blurDataURL={image}
-                        placeholder="blur"
-                      />
-                    </Link>
+                  <div key={item.id}>
+                    <Image
+                      src={
+                        item.sprites.other.dream_world.front_default ||
+                        item.sprites.other['official-artwork'].front_default
+                      }
+                      alt={`pokemon image`}
+                      width={80}
+                      height={80}
+                      loading="lazy"
+                      blurDataURL={
+                        item.sprites.other.dream_world.front_default ||
+                        item.sprites.other['official-artwork'].front_default
+                      }
+                      placeholder="blur"
+                    />
                   </div>
                   <HiArrowNarrowRight size={30} />
                 </>
