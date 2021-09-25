@@ -1,11 +1,10 @@
 import React from 'react';
-import { AiFillHeart } from 'react-icons/ai';
+import { AiFillHeart, AiOutlineClose } from 'react-icons/ai';
 import { BsShieldShaded } from 'react-icons/bs';
 import { GiPunchBlast } from 'react-icons/gi';
 import { HiArrowNarrowRight } from 'react-icons/hi';
 
 import Image from 'next/image';
-import Link from 'next/link';
 
 import { colorTypeGradients } from '~/utils/utils';
 
@@ -52,6 +51,7 @@ type DetailsProps = {
   evoDetails: [
     {
       id: string;
+      name: string;
       sprites: {
         other: {
           dream_world: {
@@ -61,7 +61,8 @@ type DetailsProps = {
       };
     }
   ];
-  // type: string[];
+  type: string[];
+  handleClose: (e: any) => void;
 };
 
 export const PokeCardDetails = ({
@@ -73,54 +74,59 @@ export const PokeCardDetails = ({
   hp,
   attack,
   defense,
-  // abilities,
-  // moves,
+  abilities,
+  moves,
   weight,
   height,
   evoDetails,
-}: // type,
-DetailsProps) => {
+  type,
+  handleClose,
+}: DetailsProps) => {
   let finalColor;
 
-  // if (type.length === 2) {
-  //   finalColor = colorTypeGradients(type[0], type[1], type.length);
-  // } else {
-  //   finalColor = colorTypeGradients(type[0], type[0], type.length);
-  // }
+  if (type.length === 2) {
+    finalColor = colorTypeGradients(type[0], type[1], type.length);
+  } else {
+    finalColor = colorTypeGradients(type[0], type[0], type.length);
+  }
 
-  console.log(evoDetails);
   return (
     <Container>
       <CardContent
-      // style={{
-      //   background: `linear-gradient(${finalColor[0]}, ${finalColor[1]})`,
-      // }}
+        style={{
+          background: `linear-gradient(${finalColor[0]}, ${finalColor[1]})`,
+        }}
       >
+        <AiOutlineClose
+          onClick={e => handleClose(e)}
+          size={30}
+          className="close_btn"
+        />
         <BasicInfo>
           <Status>
             <h2>NO. {String(id).padStart(3, '0')}</h2>
             <h2 className="pokemon_name">{name}</h2>
             <div className="pokemon_img">
-              {/* <Image
+              <Image
                 src={image}
                 alt={`pokemon ${name} image`}
                 width={150}
                 height={150}
                 className="pokemon_img"
-              /> */}
+              />
             </div>
           </Status>
           <Types>
-            {/* <div className={`poke-type-bg-genera ${type[0]}`}> */}
-            <p>{genera}</p>
-            {/* </div> */}
-            {/* <div className="poke-type">
+            <div className={`poke-type-bg-genera ${type[0]}`}>
+              <p>{genera}</p>
+            </div>
+            <div className="poke-type">
               {type.map(pokeType => (
                 <div key={pokeType} className={`poke-type-bg ${pokeType}`}>
                   <img src={`${pokeType}.svg`} alt="Pokemon type" />
                 </div>
               ))}
-            </div> */}
+            </div>
           </Types>
           <BaseStats>
             <div>
@@ -165,25 +171,26 @@ DetailsProps) => {
           <Abilities>
             <h2>Abilities</h2>
             <div>
-              {/* {abilities.map(({ ability }) => (
+              {abilities.map(({ ability }) => (
                 <li key={ability.name}>{ability.name}</li>
-              ))} */}
+              ))}
             </div>
           </Abilities>
           <Moves>
             <h2>Main moves</h2>
             <div>
-              {/* {moves.slice(0, 6).map(({ move }) => (
+              {moves.slice(0, 6).map(({ move }) => (
                 <li key={move.name}>{move.name}</li>
-              ))} */}
+              ))}
             </div>
           </Moves>
           <EvolutionChain>
             <h2>Evolution</h2>
-            <div>
-              {evoDetails.map(item => (
-                <>
-                  <div key={item.id}>
+            <div className="evochain_container">
+              {evoDetails.map((item, index) => (
+                <div className="evochain_content" key={item.id}>
+                  <div className="evochain_info">
+                    <div className="bg-color" />
                     <Image
                       src={
                         item.sprites.other.dream_world.front_default ||
@@ -199,9 +206,10 @@ DetailsProps) => {
                       }
                       placeholder="blur"
                     />
+                    <p>{item.name}</p>
                   </div>
-                  <HiArrowNarrowRight size={30} />
-                </>
+                  <HiArrowNarrowRight className={`arrow-${index}`} size={30} />
+                </div>
               ))}
             </div>
           </EvolutionChain>

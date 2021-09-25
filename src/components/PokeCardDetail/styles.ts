@@ -1,10 +1,24 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
+
+const appearFromTop = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(150px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+`;
 
 export const Container = styled.main`
   display: flex;
+  margin: 7% auto;
   justify-content: center;
   flex-direction: column;
-  padding: 2rem 5rem;
+  width: 55vw;
+
+  animation: ${appearFromTop} 1s ease-in-out;
 `;
 
 export const CardContent = styled.div`
@@ -14,8 +28,20 @@ export const CardContent = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: center;
-  min-width: 65vw;
+  min-width: 50vw;
   height: 100%;
+
+  .close_btn {
+    color: white;
+    position: absolute;
+    top: 150px;
+    right: 450px;
+
+    &:hover {
+      cursor: pointer;
+      color: black;
+    }
+  }
 `;
 
 export const BasicInfo = styled.aside`
@@ -250,32 +276,49 @@ export const Moves = styled.div`
 `;
 
 export const EvolutionChain = styled.div`
-  p {
-    color: black;
-    font-size: 16px;
-    font-weight: 600;
-  }
-
-  .poke-type-bg {
-    border-radius: 50%;
-    width: 110px;
-    height: 110px;
-
-    &:hover {
-      cursor: pointer;
-    }
-  }
-
-  div {
+  .evochain_container {
     display: flex;
-    max-width: calc(80% - 200px);
-    justify-content: space-around;
-    align-items: center;
+    justify-content: space-between;
+    padding-left: 20px;
+    max-width: 500px;
 
-    svg {
-      color: black;
+    .bg-color {
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      padding: 55px;
+      margin-top: -50px;
+      position: absolute;
+    }
 
-      &:last-child {
+    .evochain_content {
+      display: flex;
+      justify-content: space-around;
+
+      .evochain_info {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+
+        p {
+          font-size: 18px;
+          font-weight: 600;
+
+          &:first-letter {
+            text-transform: uppercase;
+          }
+        }
+      }
+      svg {
+        color: black;
+        position: relative;
+        top: 25%;
+        left: 35%;
+      }
+
+      .arrow-2 {
         display: none;
       }
     }

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import axios from 'axios';
 
@@ -55,61 +55,45 @@ export default function GetPokemonEvolution() {
   const [isSelected, setIsSelected] = useState(false);
 
   const [pokemonEvoDetail, setPokemonEvoDetail] = useState<any>([]);
-  const [isMounted, setIsMounted] = useState(false);
+
+  const [as, setAs] = useState<any>([]);
 
   const handlePokemon = useCallback(async (value: number) => {
-    await api.getPokemonSpeciesByName(value).then((res: any) =>
-      setPokeSpecies({
-        name: res.name,
-        id: res.id,
-        genera: res.genera,
-        flavor_text_entries: res.flavor_text_entries,
-        evolution_chain: res.evolution_chain,
+    const getDetails = await api.getPokemonByName(value);
+    const getSpecies = await api.getPokemonSpeciesByName(value);
+    const getEvolution = await axios.get(getSpecies.evolution_chain.url);
+
+    setPokemonEvoDetail(getDetails);
+    setPokeSpecies(getSpecies);
+
+    const evoChain: any[] = [];
+    let evoData = getEvolution.data.chain;
+
+    do {
+      evoChain.push({
+        evolutionName: evoData.species.name,
+      });
+
+      evoData = evoData['evolves_to'][0];
+      // eslint-disable-next-line no-prototype-builtins
+    } while (!!evoData && evoData.hasOwnProperty('evolves_to'));
+    const pokemonArr: any[] = [];
+    await Promise.all(
+      evoChain.map(async poke => {
+        const result = await api.getPokemonByName(poke.evolutionName);
+        pokemonArr.push(result);
       })
     );
+    setAs(pokemonArr);
     setIsSelected(true);
   }, []);
 
-  useEffect(() => {
-    if (isSelected) {
-      const getPokemonData = async (result: any) => {
-        const pokemonArr: any[] = [];
-
-        await Promise.all(
-          result.map(async (pokemon: { evolutionName: string }) => {
-            const result = await api.getPokemonByName(pokemon.evolutionName);
-            pokemonArr.push(result);
-          })
-        );
-
-        setPokemonEvoDetail(pokemonArr);
-      };
-      const apiResponse = async () => {
-        const response = await axios.get(pokeSpecies.evolution_chain.url);
-        console.log(response);
-        const evoChain = [];
-        let evoData = response.data.chain;
-
-        do {
-          evoChain.push({
-            evolutionName: evoData.species.name,
-          });
-
-          evoData = evoData['evolves_to'][0];
-          // eslint-disable-next-line no-prototype-builtins
-        } while (!!evoData && evoData.hasOwnProperty('evolves_to'));
-        getPokemonData(evoChain);
-      };
-      apiResponse();
-    }
-  }, [pokeSpecies, isSelected]);
-
   return {
-    handlePokemon,
     pokeSpecies,
     isSelected,
+    handlePokemon,
     setIsSelected,
     pokemonEvoDetail,
-    isMounted,
+    as,
   };
 }

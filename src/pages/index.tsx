@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 
-import { Modal, Box } from '@material-ui/core';
+import { Modal } from '@material-ui/core';
 import { useAnimation } from 'framer-motion';
 
 import { PokeRegions } from '~/components/Filters/PokeRegions';
@@ -51,10 +51,10 @@ const Home = () => {
   const {
     pokeSpecies,
     isSelected,
-    isMounted,
+    as,
     pokemonEvoDetail,
-    handlePokemon,
     setIsSelected,
+    handlePokemon,
   } = GetPokemonEvolution();
 
   const controls = useAnimation();
@@ -75,18 +75,6 @@ const Home = () => {
       }));
     }
   }, [controls, isLoading]);
-
-  const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: 400,
-    bgcolor: 'background.paper',
-    border: '2px solid #000',
-    boxShadow: 24,
-    p: 4,
-  };
 
   const renderPokemons = () => {
     if (isFiltered) {
@@ -123,7 +111,17 @@ const Home = () => {
   };
 
   const showModal = () => {
-    const { name, id, genera } = pokeSpecies;
+    const { name, id, genera, flavor_text_entries } = pokeSpecies;
+    const pokeGenera = genera
+      .filter(gen => gen.language.name === 'en')
+      .map(gen => gen.genus)
+      .toString();
+
+    const flavText = flavor_text_entries.filter(
+      flav => flav.language.name === 'en'
+    )[0].flavor_text;
+
+    const handleClose = (prevState: any) => setIsSelected(!prevState);
     return (
       <>
         <Modal
@@ -132,29 +130,27 @@ const Home = () => {
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >
-          <Box sx={style}>
-            <h1>Pokemon Details</h1>
+          <>
             <PokeCardDetails
               id={id}
               name={name}
-              // image={pokemonEvoDetail.map(
-              //   item => item.sprites.other.dream_world.front_default
-              // )}
-              attack={pokemonEvoDetail.map(item => item.stats[1].base_stat)}
-              defense={pokemonEvoDetail.map(item => item.stats[2].base_stat)}
-              hp={pokemonEvoDetail.map(item => item.stats[0].base_stat)}
-              // abilities={pokemonEvoDetail.map(item => item.abilities)}
-              // moves={pokemonEvoDetail.map(item => item.moves)}
-              height={pokemonEvoDetail.map(item => item.height)}
-              weight={pokemonEvoDetail.map(item => item.weight)}
-              // genera={pokemonGenera}
-              // about={flavText.replace('', ' ').replace('POKéMON', 'POKÉMON')}
-              evoDetails={pokemonEvoDetail}
-              // type={pokemonEvoDetail
-              //   .map(item => item.types)
-              //   .map((item: { type: { name: any } }) => item.type.name)}
+              image={pokemonEvoDetail.sprites.other.dream_world.front_default}
+              hp={pokemonEvoDetail.stats[0].base_stat}
+              attack={pokemonEvoDetail.stats[1].base_stat}
+              defense={pokemonEvoDetail.stats[2].base_stat}
+              abilities={pokemonEvoDetail.abilities}
+              moves={pokemonEvoDetail.moves}
+              height={pokemonEvoDetail.height}
+              weight={pokemonEvoDetail.weight}
+              genera={pokeGenera}
+              about={flavText.replace('', ' ').replace('POKéMON', 'POKÉMON')}
+              evoDetails={as}
+              type={pokemonEvoDetail.types.map(
+                (item: { type: { name: string } }) => item.type.name
+              )}
+              handleClose={handleClose}
             />
-          </Box>
+          </>
         </Modal>
       </>
     );
@@ -174,7 +170,7 @@ const Home = () => {
             <PokeSearch value={search} onChangeValue={handleSearch} />
           </FilterAndSearch>
           <Container>{renderPokemons()}</Container>
-          {/* {isMounted ? showModal() : null} */}
+          {isSelected ? showModal() : null}
         </>
       )}
     </>
