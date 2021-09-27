@@ -1,5 +1,4 @@
 import React from 'react';
-import Loader from 'react-loader-spinner';
 
 import Image from 'next/dist/client/image';
 
@@ -7,16 +6,11 @@ import loadingPikachu3 from '~/assets/images/loadingPikachu3.gif';
 
 import { Container } from './styles';
 
-export const PokeLoading = (loading: any) => {
+export const PokeLoading = () => {
   return (
-    <>
-      {!loading ? (
-        <Container className="loading">
-          Loading
-          <Loader type="ThreeDots" color="#ffe031" height={80} width={80} />
-          <Image src={loadingPikachu3} alt="loading" />
-        </Container>
-      ) : null}
-    </>
+    <Container className="loading">
+      <h2>Loading</h2>
+      <Image src={loadingPikachu3} alt="loading" />
+    </Container>
   );
 };

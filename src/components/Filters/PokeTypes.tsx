@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import api from '~/services/api';
+import { api } from '~/services/api';
 
 import { Container } from './styles';
 
@@ -17,7 +17,11 @@ export const PokeTypes: React.FC<ChangeValue> = ({ onChangeValue, value }) => {
   const [types, setTypes] = useState<InputProps[]>([]);
 
   useEffect(() => {
-    api.get('/type').then(response => setTypes(response.data.results));
+    api
+      .getTypesList()
+      .then((response: { results: React.SetStateAction<InputProps[]> }) =>
+        setTypes(response.results)
+      );
   }, []);
 
   return (

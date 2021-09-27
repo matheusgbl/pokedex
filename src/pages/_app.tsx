@@ -1,14 +1,14 @@
 import '~/styles/globals.ts';
+
 import type { AppProps } from 'next/app';
 
-import GlobalStyle from '~/styles/globals';
+import { PokemonProvider } from '~/Context/PokemonContext';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <>
+    <PokemonProvider>
       <Component {...pageProps} />
-      <GlobalStyle />
-    </>
+    </PokemonProvider>
   );
 }
 

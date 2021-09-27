@@ -28,7 +28,7 @@ export const Card = styled.div`
   }
 
   h3 {
-    color: black;
+    color: ${props => props.theme.colors.text};
     opacity: 0.95;
     letter-spacing: -1px;
     overflow: hidden;
@@ -52,7 +52,7 @@ export const Card = styled.div`
   }
 
   .poke-id {
-    color: white;
+    color: ${props => props.theme.colors.background};
     text-align: left;
     font-weight: 600;
     margin-bottom: 10px;
@@ -63,7 +63,7 @@ export const Card = styled.div`
     position: absolute;
     margin-top: -35px;
     margin-left: 140px;
-    color: white;
+    color: ${props => props.theme.colors.background};
   }
 
   .poke-type {
