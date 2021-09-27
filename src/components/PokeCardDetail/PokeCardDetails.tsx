@@ -138,13 +138,13 @@ export const PokeCardDetails = ({
               </p>
               <p>
                 <GiPunchBlast color="#fff" size={22} />
-                Attack
+                ATK.
                 <br />
                 {attack}
               </p>
               <p>
                 <BsShieldShaded color="#0f74e7" size={22} />
-                Defense
+                DEF.
                 <br />
                 {defense}
               </p>

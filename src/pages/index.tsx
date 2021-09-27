@@ -1,7 +1,8 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 
 import { Modal } from '@material-ui/core';
 import { useAnimation } from 'framer-motion';
+import { ThemeProvider } from 'styled-components';
 
 import { PokeRegions } from '~/components/Filters/PokeRegions';
 import { PokeSortBy } from '~/components/Filters/PokeSortBy';
@@ -11,14 +12,17 @@ import { PokeLoading } from '~/components/Loading/PokeLoading';
 import PokeCard from '~/components/PokeCard/PokeCard';
 import { PokeCardDetails } from '~/components/PokeCardDetail/PokeCardDetails';
 import { PokeSearch } from '~/components/SearchBar/PokeSearch';
+import ThemeSwitch from '~/components/ThemeSwitch/ThemeSwitch';
 import { PokemonContext } from '~/Context/PokemonContext';
 import GetPokemonEvolution from '~/hooks/GetPokemonEvolution';
+import GlobalStyle from '~/styles/globals';
 import {
   Container,
   FilterAndSearch,
   Content,
   ContentAnimated,
 } from '~/styles/pages/home';
+import { dark, light } from '~/styles/themes';
 
 type pokeProps = {
   id: number;
@@ -156,13 +160,21 @@ const Home = () => {
     );
   };
 
+  const [theme, setTheme] = useState('light');
+
+  const toggleTheme = () => {
+    theme == 'light' ? setTheme('dark') : setTheme('light');
+  };
+
   return (
-    <>
+    <ThemeProvider theme={theme == 'light' ? light : dark}>
+      <GlobalStyle />
       {isLoading ? (
         <PokeLoading />
       ) : (
         <>
           <Header />
+          <ThemeSwitch theme={theme} changeTheme={toggleTheme} />
           <FilterAndSearch>
             <PokeRegions value={selectedRegion} onChangeValue={handleRegion} />
             <PokeTypes value={typeFilter} onChangeValue={handleType} />
@@ -173,7 +185,7 @@ const Home = () => {
           {isSelected ? showModal() : null}
         </>
       )}
-    </>
+    </ThemeProvider>
   );
 };
 

@@ -45,7 +45,7 @@ export const CardContent = styled.div`
 `;
 
 export const BasicInfo = styled.aside`
-  width: 30%;
+  width: 35%;
   height: 100%;
   display: flex;
   text-align: center;
@@ -189,9 +189,10 @@ export const Types = styled.div`
 export const BaseStats = styled.div`
   div {
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     font-weight: 600;
     margin-bottom: 10px;
+
     span {
       margin-left: 10px;
     }
@@ -261,7 +262,7 @@ export const Moves = styled.div`
   & > div {
     display: flex;
     justify-content: space-between;
-    max-width: calc(100% - 150px);
+    max-width: calc(100% - 50px);
     background-color: rgba(0, 0, 0, 0.4);
     border-radius: 20px;
     min-height: 4rem;
@@ -305,6 +306,10 @@ export const EvolutionChain = styled.div`
         p {
           font-size: 18px;
           font-weight: 600;
+          background-color: rgba(0, 0, 0, 0.5);
+          border-radius: 4px;
+          padding: 2px;
+          margin-bottom: -5px;
 
           &:first-letter {
             text-transform: uppercase;
