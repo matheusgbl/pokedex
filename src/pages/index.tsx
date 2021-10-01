@@ -12,7 +12,6 @@ import { PokeLoading } from '~/components/Loading/PokeLoading';
 import PokeCard from '~/components/PokeCard/PokeCard';
 import { PokeCardDetails } from '~/components/PokeCardDetail/PokeCardDetails';
 import { PokeSearch } from '~/components/SearchBar/PokeSearch';
-import ThemeSwitch from '~/components/ThemeSwitch/ThemeSwitch';
 import { PokemonContext } from '~/Context/PokemonContext';
 import GetPokemonEvolution from '~/hooks/GetPokemonEvolution';
 import GlobalStyle from '~/styles/globals';
@@ -173,8 +172,7 @@ const Home = () => {
         <PokeLoading />
       ) : (
         <>
-          <Header />
-          <ThemeSwitch theme={theme} changeTheme={toggleTheme} />
+          <Header currTheme={theme} toggleTheme={toggleTheme} />
           <FilterAndSearch>
             <PokeRegions value={selectedRegion} onChangeValue={handleRegion} />
             <PokeTypes value={typeFilter} onChangeValue={handleType} />

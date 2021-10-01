@@ -8,7 +8,7 @@ const PokemonProvider = ({ children }) => {
   const [pokemons, setPokemons] = useState([]);
   const [filteredPokemons, setFilteredPokemons] = useState([]);
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [isFiltered, setIsFiltered] = useState(false);
 
   const [regions] = useState([
@@ -129,7 +129,6 @@ const PokemonProvider = ({ children }) => {
   );
 
   useEffect(() => {
-    setIsLoading(true);
     const getPokemonData = async result => {
       const pokemonArr = [];
 

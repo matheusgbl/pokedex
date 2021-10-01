@@ -33,9 +33,9 @@ export const CardContent = styled.div`
 
   .close_btn {
     color: white;
-    position: absolute;
-    top: 150px;
-    right: 450px;
+    position: fixed;
+    top: 120px;
+    right: 24%;
 
     &:hover {
       cursor: pointer;
@@ -262,7 +262,7 @@ export const Moves = styled.div`
   & > div {
     display: flex;
     justify-content: space-between;
-    max-width: calc(100% - 50px);
+    max-width: calc(100% - 20px);
     background-color: rgba(0, 0, 0, 0.4);
     border-radius: 20px;
     min-height: 4rem;

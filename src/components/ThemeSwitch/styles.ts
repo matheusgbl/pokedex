@@ -1,9 +1,6 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  position: absolute;
-  top: 80px;
-  left: 280px;
   background-color: ${props =>
     props.theme.title === 'dark'
       ? 'rgba(255, 255, 255, 0.4)'

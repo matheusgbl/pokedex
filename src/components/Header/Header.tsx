@@ -5,11 +5,18 @@ import Image from 'next/image';
 
 import logo from '~/assets/images/logo.png';
 
+import ThemeSwitch from '../ThemeSwitch/ThemeSwitch';
 import { Container } from './styles';
 
-export const Header: React.FC = () => {
+interface ThemeProps {
+  currTheme: string;
+  toggleTheme: () => void;
+}
+
+export const Header = ({ currTheme, toggleTheme }: ThemeProps) => {
   return (
     <Container>
+      <ThemeSwitch theme={currTheme} changeTheme={toggleTheme} />
       <Image src={logo} alt="logo"></Image>
       <a
         href="https://github.com/matheusgbl/pokedex"
