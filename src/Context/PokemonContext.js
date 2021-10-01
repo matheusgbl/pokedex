@@ -75,6 +75,9 @@ const PokemonProvider = ({ children }) => {
 
       setLimit(resultLimit);
       setOffset(resultOffset);
+      setTypefilter('All types');
+      setSearch('');
+      setSortBy('Id');
       setSelectedRegion(input);
     },
     [regions]
@@ -129,6 +132,7 @@ const PokemonProvider = ({ children }) => {
   );
 
   useEffect(() => {
+    setIsLoading(true);
     const getPokemonData = async result => {
       const pokemonArr = [];
 

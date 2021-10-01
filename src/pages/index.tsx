@@ -81,6 +81,13 @@ const Home = () => {
 
   const renderPokemons = () => {
     if (isFiltered) {
+      if (filteredPokemons.length === 0) {
+        return (
+          <div className="pokemon_not_found">
+            <h2>There are no pokémon in this region :/</h2>
+          </div>
+        );
+      }
       return filteredPokemons.map((poke: pokeProps) => (
         <Content key={poke.id}>
           <PokeCard

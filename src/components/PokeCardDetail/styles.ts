@@ -34,8 +34,8 @@ export const CardContent = styled.div`
   .close_btn {
     color: white;
     position: fixed;
-    top: 120px;
-    right: 24%;
+    top: 140px;
+    right: 23%;
 
     &:hover {
       cursor: pointer;
