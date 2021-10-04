@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 
-import { Modal } from '@material-ui/core';
 import { useAnimation } from 'framer-motion';
+import { InferGetStaticPropsType } from 'next';
 import { ThemeProvider } from 'styled-components';
 
 import { PokeRegions } from '~/components/Filters/PokeRegions';
@@ -14,6 +14,7 @@ import { PokeCardDetails } from '~/components/PokeCardDetail/PokeCardDetails';
 import { PokeSearch } from '~/components/SearchBar/PokeSearch';
 import { PokemonContext } from '~/Context/PokemonContext';
 import GetPokemonEvolution from '~/hooks/GetPokemonEvolution';
+import { api } from '~/services/api';
 import GlobalStyle from '~/styles/globals';
 import {
   Container,
@@ -35,9 +36,38 @@ type pokeProps = {
   pokemons: [];
 };
 
-const Home = () => {
+export const getStaticProps = async () => {
+  const getPokemonData = async (result: any) => {
+    const pokemonArr: any[] = [];
+
+    await Promise.all(
+      result.map(async (pokemon: { name: string }) => {
+        const result = await api.getPokemonByName(pokemon.name);
+        pokemonArr.push(result);
+      })
+    );
+
+    pokemonArr.sort((a, b) => (a.id > b.id ? 1 : b.id > a.id ? -1 : 0));
+    return pokemonArr;
+  };
+
+  const interval = {
+    limit: 151,
+    offset: 0,
+  };
+
+  const res = await api.getPokemonsList(interval);
+  const pokemons: pokeProps[] = await getPokemonData(res.results);
+
+  return {
+    props: {
+      pokemons,
+    },
+  };
+};
+
+const Home = ({ pokemons }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const {
-    pokemons,
     filteredPokemons,
     isFiltered,
     selectedRegion,
@@ -54,8 +84,8 @@ const Home = () => {
   const {
     pokeSpecies,
     isSelected,
-    as,
     pokemonEvoDetail,
+    evoData,
     setIsSelected,
     handlePokemon,
   } = GetPokemonEvolution();
@@ -122,46 +152,40 @@ const Home = () => {
 
   const showModal = () => {
     const { name, id, genera, flavor_text_entries } = pokeSpecies;
-    const pokeGenera = genera
-      .filter(gen => gen.language.name === 'en')
-      .map(gen => gen.genus)
-      .toString();
+    const {
+      sprites,
+      hp,
+      attack,
+      defense,
+      abilities,
+      moves,
+      height,
+      weight,
+      type,
+    } = pokemonEvoDetail;
 
-    const flavText = flavor_text_entries.filter(
-      flav => flav.language.name === 'en'
-    )[0].flavor_text;
-
-    const handleClose = (prevState: any) => setIsSelected(!prevState);
+    const handleClose = () => setIsSelected(false);
     return (
       <>
-        <Modal
-          open={isSelected}
-          onClose={prevState => setIsSelected(!prevState)}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <>
-            <PokeCardDetails
-              id={id}
-              name={name}
-              image={pokemonEvoDetail.sprites.other.dream_world.front_default}
-              hp={pokemonEvoDetail.stats[0].base_stat}
-              attack={pokemonEvoDetail.stats[1].base_stat}
-              defense={pokemonEvoDetail.stats[2].base_stat}
-              abilities={pokemonEvoDetail.abilities}
-              moves={pokemonEvoDetail.moves}
-              height={pokemonEvoDetail.height}
-              weight={pokemonEvoDetail.weight}
-              genera={pokeGenera}
-              about={flavText.replace('', ' ').replace('POKéMON', 'POKÉMON')}
-              evoDetails={as}
-              type={pokemonEvoDetail.types.map(
-                (item: { type: { name: string } }) => item.type.name
-              )}
-              handleClose={handleClose}
-            />
-          </>
-        </Modal>
+        <PokeCardDetails
+          id={id}
+          name={name}
+          image={sprites}
+          hp={hp}
+          attack={attack}
+          defense={defense}
+          abilities={abilities}
+          moves={moves}
+          height={height}
+          weight={weight}
+          genera={genera}
+          about={flavor_text_entries}
+          evoDetails={evoData}
+          type={type}
+          handleClose={handleClose}
+          modalOpen={isSelected}
+          modalClose={handleClose}
+        />
       </>
     );
   };

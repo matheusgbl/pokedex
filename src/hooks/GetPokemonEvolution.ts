@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 
 import axios from 'axios';
 
@@ -56,16 +56,46 @@ export default function GetPokemonEvolution() {
 
   const [pokemonEvoDetail, setPokemonEvoDetail] = useState<any>([]);
 
-  const [as, setAs] = useState<any>([]);
+  const [evoData, setEvoData] = useState<any>([]);
 
-  const handlePokemon = useCallback(async (value: number) => {
+  const handlePokemon = async (value: number) => {
     const getDetails = await api.getPokemonByName(value);
     const getSpecies = await api.getPokemonSpeciesByName(value);
+
+    setPokemonEvoDetail({
+      sprites:
+        getDetails.sprites.other.dream_world.front_default ||
+        getDetails.sprites.other['official-artwork'].front_default,
+      hp: getDetails.stats[0].base_stat,
+      attack: getDetails.stats[1].base_stat,
+      defense: getDetails.stats[2].base_stat,
+      abilities: getDetails.abilities,
+      moves: getDetails.moves.slice(0, 6),
+      height: getDetails.height,
+      weight: getDetails.weight,
+      type: getDetails.types.map(
+        (item: { type: { name: any } }) => item.type.name
+      ),
+    });
+    setPokeSpecies({
+      name: getSpecies.name,
+      id: getSpecies.id,
+      genera: getSpecies.genera
+        .filter(
+          (gen: { language: { name: string } }) => gen.language.name === 'en'
+        )
+        .map((gen: { genus: any }) => gen.genus)
+        .toString(),
+      flavor_text_entries: getSpecies.flavor_text_entries
+        .filter(
+          (flav: { language: { name: string } }) => flav.language.name === 'en'
+        )[0]
+        .flavor_text.replace('', ' ')
+        .replace('POKéMON', 'POKÉMON'),
+      evolution_chain: getSpecies.evolution_chain,
+    });
+
     const getEvolution = await axios.get(getSpecies.evolution_chain.url);
-
-    setPokemonEvoDetail(getDetails);
-    setPokeSpecies(getSpecies);
-
     const evoChain: any[] = [];
     let evoData = getEvolution.data.chain;
 
@@ -84,9 +114,9 @@ export default function GetPokemonEvolution() {
         pokemonArr.push(result);
       })
     );
-    setAs(pokemonArr);
+    setEvoData(pokemonArr);
     setIsSelected(true);
-  }, []);
+  };
 
   return {
     pokeSpecies,
@@ -94,6 +124,6 @@ export default function GetPokemonEvolution() {
     handlePokemon,
     setIsSelected,
     pokemonEvoDetail,
-    as,
+    evoData,
   };
 }

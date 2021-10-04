@@ -283,14 +283,14 @@ export const EvolutionChain = styled.div`
     padding-left: 20px;
     max-width: 500px;
 
-    .bg-color {
-      background: rgba(0, 0, 0, 0.3);
+    .poke-type-bg {
       border-radius: 50%;
       display: flex;
       justify-content: center;
       padding: 55px;
-      margin-top: -50px;
+      margin-top: -45px;
       position: absolute;
+      align-items: center;
     }
 
     .evochain_content {
@@ -306,7 +306,6 @@ export const EvolutionChain = styled.div`
         p {
           font-size: 18px;
           font-weight: 600;
-          background-color: rgba(0, 0, 0, 0.5);
           border-radius: 4px;
           padding: 2px;
           margin-bottom: -5px;
