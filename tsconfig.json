@@ -21,7 +21,4 @@
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/services/api.js", "src/Context/store.js", "src/utils/usePersistedState.js"],
   "exclude": ["node_modules"],
-  "files" : [
-    "src/styles/styled.d.ts"
-  ]
 }
