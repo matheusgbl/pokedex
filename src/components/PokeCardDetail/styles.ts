@@ -1,6 +1,6 @@
 import styled, { keyframes } from 'styled-components';
 
-const appearFromTop = keyframes`
+const appearFromBottom = keyframes`
   from {
     opacity: 0;
     transform: translateY(150px);
@@ -19,7 +19,7 @@ export const Container = styled.main`
   width: 55vw;
   outline: 0;
 
-  animation: ${appearFromTop} 1s ease-in-out;
+  animation: ${appearFromBottom} 1s ease-in-out;
 
   .close_btn {
     color: white;

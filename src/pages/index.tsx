@@ -10,6 +10,7 @@ import { Header } from '~/components/Header/Header';
 import { PokeLoading } from '~/components/Loading/PokeLoading';
 import PokeCard from '~/components/PokeCard/PokeCard';
 import { PokeCardDetails } from '~/components/PokeCardDetail/PokeCardDetails';
+import ScrollToTop from '~/components/ScrollToTop/ScrollToTop';
 import { PokeSearch } from '~/components/SearchBar/PokeSearch';
 import { PokemonContext } from '~/Context/PokemonContext';
 import GetPokemonEvolution from '~/hooks/GetPokemonEvolution';
@@ -216,6 +217,7 @@ const Home = ({ pokemons }: InferGetStaticPropsType<typeof getStaticProps>) => {
           </FilterAndSearch>
           <Container>{renderPokemons()}</Container>
           {isSelected ? renderModal() : null}
+          <ScrollToTop />
         </>
       )}
     </>
