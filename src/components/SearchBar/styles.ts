@@ -7,7 +7,6 @@ export const Container = styled.div`
 
   label {
     font-size: 16px;
-    color: ${props => props.theme.colors.text};
     font-weight: 600;
     text-align: center;
   }
@@ -16,7 +15,6 @@ export const Container = styled.div`
     outline: none;
     margin-bottom: 1.5rem;
     margin-top: 0.5rem;
-    border: ${props => props.theme.colors.border};
     border-radius: 5px;
     height: 1.3rem;
     text-indent: 0.3rem;

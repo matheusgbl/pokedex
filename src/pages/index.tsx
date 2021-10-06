@@ -1,8 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 
 import { useAnimation } from 'framer-motion';
 import { InferGetStaticPropsType } from 'next';
-import { ThemeProvider } from 'styled-components';
 
 import { PokeRegions } from '~/components/Filters/PokeRegions';
 import { PokeSortBy } from '~/components/Filters/PokeSortBy';
@@ -22,7 +21,6 @@ import {
   Content,
   ContentAnimated,
 } from '~/styles/pages/home';
-import { dark, light } from '~/styles/themes';
 
 type pokeProps = {
   id: number;
@@ -202,20 +200,14 @@ const Home = ({ pokemons }: InferGetStaticPropsType<typeof getStaticProps>) => {
     );
   };
 
-  const [theme, setTheme] = useState('light');
-
-  const toggleTheme = () => {
-    theme == 'light' ? setTheme('dark') : setTheme('light');
-  };
-
   return (
-    <ThemeProvider theme={theme == 'light' ? light : dark}>
+    <>
       <GlobalStyle />
       {isLoading ? (
         <PokeLoading />
       ) : (
         <>
-          <Header currTheme={theme} toggleTheme={toggleTheme} />
+          <Header />
           <FilterAndSearch>
             <PokeRegions value={selectedRegion} onChangeValue={handleRegion} />
             <PokeTypes value={typeFilter} onChangeValue={handleType} />
@@ -226,7 +218,7 @@ const Home = ({ pokemons }: InferGetStaticPropsType<typeof getStaticProps>) => {
           {isSelected ? renderModal() : null}
         </>
       )}
-    </ThemeProvider>
+    </>
   );
 };
 

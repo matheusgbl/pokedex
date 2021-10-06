@@ -2,7 +2,6 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   font-family: 'Early Gameboy', sans-serif;
-  color: ${props => props.theme.colors.text};
   font-size: 20px;
   font-weight: bold;
   letter-spacing: 2px;

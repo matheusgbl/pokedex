@@ -12,7 +12,7 @@ export const Container = styled.div`
     width: 100%;
     text-align: center;
     grid-column: 1 / 8;
-    color: ${props => props.theme.colors.text};
+    color: white;
   }
 `;
 

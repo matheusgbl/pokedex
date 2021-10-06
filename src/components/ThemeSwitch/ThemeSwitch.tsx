@@ -1,31 +1,39 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { BsMoon } from 'react-icons/bs';
 import { MdWbSunny } from 'react-icons/md';
-import Switch from 'react-switch';
 
-import { Container } from './styles';
+import { useTheme } from 'next-themes';
 
-interface ThemeProps {
-  changeTheme: () => void;
-  theme: string;
-}
+import { Container, Switch, SwitchBtn } from './styles';
 
-export default function ThemeSwitch({ changeTheme, theme }: ThemeProps) {
+export const ThemeSwitch = () => {
+  const { theme, setTheme } = useTheme();
+  const [currTheme, setCurrTheme] = useState(false);
+
+  {
+    currTheme ? setTheme('light') : setTheme('dark');
+  }
+
+  const toggleTheme = () => setCurrTheme(value => !value);
+
   return (
     <Container>
-      <MdWbSunny color="#ffe031" size={24} />
       <Switch
-        onChange={changeTheme}
-        checked={theme === 'dark'}
-        checkedIcon={false}
-        uncheckedIcon={false}
-        height={15}
-        width={40}
-        handleDiameter={20}
-        onColor="#ffe031"
-        offColor="#325387"
-      />
-      <BsMoon color="#325387" size={24} />
+        style={{
+          backgroundColor: theme === 'dark' ? '#325387' : '#f5d627',
+        }}
+      >
+        <SwitchBtn
+          onClick={toggleTheme}
+          className={`${!currTheme ? 'switch_checked' : ''}`}
+        />
+        <span>
+          <MdWbSunny size={20} color="#ffe031" />
+        </span>
+        <span>
+          <BsMoon size={20} color="#325387" />
+        </span>
+      </Switch>
     </Container>
   );
-}
+};

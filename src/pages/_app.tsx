@@ -1,14 +1,17 @@
 import '~/styles/globals.ts';
 
+import { ThemeProvider } from 'next-themes';
 import type { AppProps } from 'next/app';
 
 import { PokemonProvider } from '~/Context/PokemonContext';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <PokemonProvider>
-      <Component {...pageProps} />
-    </PokemonProvider>
+    <ThemeProvider disableTransitionOnChange enableSystem>
+      <PokemonProvider>
+        <Component {...pageProps} />
+      </PokemonProvider>
+    </ThemeProvider>
   );
 }
 
