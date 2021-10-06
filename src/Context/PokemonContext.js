@@ -79,18 +79,23 @@ const PokemonProvider = ({ children }) => {
       setSearch('');
       setSortBy('Id');
       setSelectedRegion(input);
+      setIsFiltered(true);
     },
     [regions]
   );
 
   const handleType = useCallback(
     async input => {
-      const filterResult = pokemons.filter(poke =>
-        poke.types.map(item => item.type.name).includes(input)
-      );
-      setTypefilter(input);
-      setFilteredPokemons(filterResult);
-      setIsFiltered(true);
+      if (input === 'All types') {
+        setFilteredPokemons(pokemons);
+      } else {
+        const filterResult = pokemons.filter(poke =>
+          poke.types.map(item => item.type.name).includes(input)
+        );
+        setTypefilter(input);
+        setFilteredPokemons(filterResult);
+        setIsFiltered(true);
+      }
     },
     [pokemons]
   );
@@ -155,21 +160,15 @@ const PokemonProvider = ({ children }) => {
       const res = await api.getPokemonsList(interval);
       const data = getPokemonData(res.results);
       setPokemons(await data);
+      setFilteredPokemons(await data);
       setIsLoading(false);
     };
     response();
   }, [limit, offset]);
 
-  useEffect(() => {
-    if (typeFilter === 'All types') {
-      setIsFiltered(false);
-    }
-  }, [setIsFiltered, typeFilter]);
-
   return (
     <PokemonContext.Provider
       value={{
-        pokemons,
         filteredPokemons,
         isFiltered,
         selectedRegion,

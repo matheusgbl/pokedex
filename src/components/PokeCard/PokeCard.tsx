@@ -13,7 +13,7 @@ type PokeCardProps = {
   name: string;
   image: string;
   type: string[];
-  onSelectCard: (value: number) => void;
+  onSelectCard: (value: any) => void;
 };
 
 const PokeCard = ({ id, name, image, type, onSelectCard }: PokeCardProps) => {
@@ -45,7 +45,7 @@ const PokeCard = ({ id, name, image, type, onSelectCard }: PokeCardProps) => {
         style={{
           background: `linear-gradient(${finalColor[0]}, ${finalColor[1]})`,
         }}
-        onClick={() => onSelectCard(id)}
+        onClick={onSelectCard}
       >
         <div className="poke-id"># {String(id).padStart(3, '0')}</div>
         <CgPokemon className="info-icon" size={30} />

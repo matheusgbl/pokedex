@@ -30,22 +30,8 @@ type DetailsProps = {
   image: string;
   hp: string;
   attack: string;
-  genera: [
-    {
-      genus: string;
-      language: {
-        name: string;
-      };
-    }
-  ];
-  about: [
-    {
-      flavor_text: string;
-      language: {
-        name: string;
-      };
-    }
-  ];
+  genera: string;
+  about: string;
   defense: string;
   abilities: [
     {
@@ -56,13 +42,7 @@ type DetailsProps = {
   ];
   weight: number;
   height: number;
-  moves: [
-    {
-      move: {
-        name: string;
-      };
-    }
-  ];
+  moves: any[];
   evoDetails: [
     {
       id: string;
@@ -117,16 +97,16 @@ export const PokeCardDetails = ({
       aria-describedby="modal-modal-description"
     >
       <Container>
+        <AiOutlineClose
+          onClick={e => handleClose(e)}
+          size={30}
+          className="close_btn"
+        />
         <CardContent
           style={{
             background: `linear-gradient(${finalColor[0]}, ${finalColor[1]})`,
           }}
         >
-          <AiOutlineClose
-            onClick={e => handleClose(e)}
-            size={30}
-            className="close_btn"
-          />
           <BasicInfo>
             <Status>
               <h2>NO. {String(id).padStart(3, '0')}</h2>

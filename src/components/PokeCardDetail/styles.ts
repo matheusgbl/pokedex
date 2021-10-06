@@ -17,12 +17,24 @@ export const Container = styled.main`
   justify-content: center;
   flex-direction: column;
   width: 55vw;
+  outline: 0;
 
   animation: ${appearFromTop} 1s ease-in-out;
+
+  .close_btn {
+    color: white;
+    position: relative;
+    top: 50px;
+    left: 95%;
+
+    &:hover {
+      cursor: pointer;
+      color: black;
+    }
+  }
 `;
 
 export const CardContent = styled.div`
-  background-color: #333;
   border-radius: 20px;
 
   display: flex;
@@ -30,18 +42,6 @@ export const CardContent = styled.div`
   justify-content: center;
   min-width: 50vw;
   height: 100%;
-
-  .close_btn {
-    color: white;
-    position: fixed;
-    top: 140px;
-    right: 23%;
-
-    &:hover {
-      cursor: pointer;
-      color: black;
-    }
-  }
 `;
 
 export const BasicInfo = styled.aside`

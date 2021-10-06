@@ -34,6 +34,11 @@ type pokeProps = {
   types: [];
   sprites: any;
   pokemons: [];
+  abilities: [];
+  stats: {
+    base_stat: string;
+  };
+  moves: [];
 };
 
 export const getStaticProps = async () => {
@@ -84,8 +89,8 @@ const Home = ({ pokemons }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const {
     pokeSpecies,
     isSelected,
-    pokemonEvoDetail,
     evoData,
+    pokemonEvoDetail,
     setIsSelected,
     handlePokemon,
   } = GetPokemonEvolution();
@@ -128,7 +133,7 @@ const Home = ({ pokemons }: InferGetStaticPropsType<typeof getStaticProps>) => {
             }
             name={poke.name}
             type={poke.types.map((item: pokeProps) => item.type.name)}
-            onSelectCard={handlePokemon}
+            onSelectCard={() => handlePokemon(poke)}
           />
         </Content>
       ));
@@ -143,50 +148,57 @@ const Home = ({ pokemons }: InferGetStaticPropsType<typeof getStaticProps>) => {
             }
             name={poke.name}
             type={poke.types.map((item: pokeProps) => item.type.name)}
-            onSelectCard={handlePokemon}
+            onSelectCard={() => handlePokemon(poke)}
           />
         </ContentAnimated>
       ));
     }
   };
 
-  const showModal = () => {
-    const { name, id, genera, flavor_text_entries } = pokeSpecies;
+  const renderModal = () => {
+    const { genera, flavor_text_entries } = pokeSpecies;
     const {
-      sprites,
-      hp,
-      attack,
-      defense,
-      abilities,
-      moves,
+      name,
       height,
+      id,
       weight,
-      type,
+      abilities,
+      sprites,
+      stats,
+      moves,
+      types,
     } = pokemonEvoDetail;
+    const img =
+      sprites.other.dream_world.front_default ||
+      sprites.other['official-artwork'].front_default;
+
+    const hp = stats[1].base_stat;
+    const attack = stats[2].base_stat;
+    const defense = stats[3].base_stat;
+    const move = moves.slice(0, 6);
+    const type = types.map((item: pokeProps) => item.type.name);
 
     const handleClose = () => setIsSelected(false);
     return (
-      <>
-        <PokeCardDetails
-          id={id}
-          name={name}
-          image={sprites}
-          hp={hp}
-          attack={attack}
-          defense={defense}
-          abilities={abilities}
-          moves={moves}
-          height={height}
-          weight={weight}
-          genera={genera}
-          about={flavor_text_entries}
-          evoDetails={evoData}
-          type={type}
-          handleClose={handleClose}
-          modalOpen={isSelected}
-          modalClose={handleClose}
-        />
-      </>
+      <PokeCardDetails
+        id={id}
+        name={name}
+        image={img}
+        hp={hp}
+        attack={attack}
+        defense={defense}
+        abilities={abilities}
+        moves={move}
+        height={height}
+        weight={weight}
+        genera={genera}
+        about={flavor_text_entries}
+        evoDetails={evoData}
+        type={type}
+        handleClose={handleClose}
+        modalOpen={isSelected}
+        modalClose={handleClose}
+      />
     );
   };
 
@@ -211,7 +223,7 @@ const Home = ({ pokemons }: InferGetStaticPropsType<typeof getStaticProps>) => {
             <PokeSearch value={search} onChangeValue={handleSearch} />
           </FilterAndSearch>
           <Container>{renderPokemons()}</Container>
-          {isSelected ? showModal() : null}
+          {isSelected ? renderModal() : null}
         </>
       )}
     </ThemeProvider>

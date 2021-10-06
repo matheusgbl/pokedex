@@ -5,99 +5,29 @@ import axios from 'axios';
 import { api } from '~/services/api';
 
 type SpeciesProps = {
-  genera: [
-    {
-      genus: string;
-      language: {
-        name: string;
-      };
-    }
-  ];
+  genera: string;
   evolution_chain: {
     url: string;
   };
-  id: number;
-  name: string;
-  flavor_text_entries: [
-    {
-      flavor_text: string;
-      language: {
-        name: string;
-      };
-    }
-  ];
+  flavor_text_entries: string;
 };
 
 export default function GetPokemonEvolution() {
   const [pokeSpecies, setPokeSpecies] = useState<SpeciesProps>({
-    evolution_chain: {
-      url: '',
-    },
-    genera: [
-      {
-        genus: '',
-        language: {
-          name: '',
-        },
-      },
-    ],
-    id: 0,
-    name: '',
-    flavor_text_entries: [
-      {
-        flavor_text: '',
-        language: {
-          name: '',
-        },
-      },
-    ],
+    genera: '',
+    evolution_chain: { url: '' },
+    flavor_text_entries: '',
   });
   const [isSelected, setIsSelected] = useState(false);
 
+  const [evoData, setEvoData] = useState<any>([]);
   const [pokemonEvoDetail, setPokemonEvoDetail] = useState<any>([]);
 
-  const [evoData, setEvoData] = useState<any>([]);
+  const fetchEvoImgs = async (url: string) => {
+    const fetchEvo = await axios.get(url);
 
-  const handlePokemon = async (value: number) => {
-    const getDetails = await api.getPokemonByName(value);
-    const getSpecies = await api.getPokemonSpeciesByName(value);
-
-    setPokemonEvoDetail({
-      sprites:
-        getDetails.sprites.other.dream_world.front_default ||
-        getDetails.sprites.other['official-artwork'].front_default,
-      hp: getDetails.stats[0].base_stat,
-      attack: getDetails.stats[1].base_stat,
-      defense: getDetails.stats[2].base_stat,
-      abilities: getDetails.abilities,
-      moves: getDetails.moves.slice(0, 6),
-      height: getDetails.height,
-      weight: getDetails.weight,
-      type: getDetails.types.map(
-        (item: { type: { name: any } }) => item.type.name
-      ),
-    });
-    setPokeSpecies({
-      name: getSpecies.name,
-      id: getSpecies.id,
-      genera: getSpecies.genera
-        .filter(
-          (gen: { language: { name: string } }) => gen.language.name === 'en'
-        )
-        .map((gen: { genus: any }) => gen.genus)
-        .toString(),
-      flavor_text_entries: getSpecies.flavor_text_entries
-        .filter(
-          (flav: { language: { name: string } }) => flav.language.name === 'en'
-        )[0]
-        .flavor_text.replace('', ' ')
-        .replace('POKéMON', 'POKÉMON'),
-      evolution_chain: getSpecies.evolution_chain,
-    });
-
-    const getEvolution = await axios.get(getSpecies.evolution_chain.url);
     const evoChain: any[] = [];
-    let evoData = getEvolution.data.chain;
+    let evoData = fetchEvo.data.chain;
 
     do {
       evoChain.push({
@@ -115,15 +45,40 @@ export default function GetPokemonEvolution() {
       })
     );
     setEvoData(pokemonArr);
+  };
+
+  const handlePokemon = (value: any) => {
+    const fetchPokeAbout = async () => {
+      const getDetails = await api.getPokemonSpeciesByName(value.id);
+      fetchEvoImgs(getDetails.evolution_chain.url);
+      setPokeSpecies({
+        genera: getDetails.genera
+          .filter(
+            (gen: { language: { name: string } }) => gen.language.name === 'en'
+          )
+          .map((gen: { genus: any }) => gen.genus)
+          .toString(),
+        flavor_text_entries: getDetails.flavor_text_entries
+          .filter(
+            (flav: { language: { name: string } }) =>
+              flav.language.name === 'en'
+          )[0]
+          .flavor_text.replace('', ' ')
+          .replace('POKéMON', 'POKÉMON'),
+        evolution_chain: getDetails.evolution_chain,
+      });
+    };
+    setPokemonEvoDetail(value);
+    fetchPokeAbout();
     setIsSelected(true);
   };
 
   return {
-    pokeSpecies,
-    isSelected,
     handlePokemon,
     setIsSelected,
-    pokemonEvoDetail,
+    pokeSpecies,
+    isSelected,
     evoData,
+    pokemonEvoDetail,
   };
 }
