@@ -19,6 +19,6 @@
       "~/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/services/api.js", "src/Context/store.js", "src/utils/usePersistedState.js"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/services/api.js", "src/Context/store.js"],
   "exclude": ["node_modules"],
 }

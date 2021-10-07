@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  font-family: 'Early Gameboy', sans-serif;
+  font-family: 'EarlyGameboy', sans-serif;
   font-size: 20px;
   font-weight: bold;
   letter-spacing: 2px;

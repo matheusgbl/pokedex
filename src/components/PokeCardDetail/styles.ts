@@ -65,7 +65,8 @@ export const Status = styled.div`
   }
 
   .pokemon_name {
-    font-family: 'Early GameBoy', sans-serif;
+    font-family: 'PixelOperator8', Roboto;
+    text-transform: uppercase;
   }
 
   .pokemon_img {
@@ -211,6 +212,10 @@ export const BaseStats = styled.div`
 export const OtherStats = styled.div`
   position: relative;
   top: -30px;
+
+  h2 {
+    font-family: 'PixelOperator8', Roboto;
+  }
 `;
 
 export const SecondContentInfo = styled.div`
@@ -223,11 +228,15 @@ export const SecondContentInfo = styled.div`
   color: white;
 
   h2 {
-    font-family: 'Early GameBoy', sans-serif;
+    font-family: 'PixelOperator', Roboto;
   }
 `;
 
 export const About = styled.aside`
+  h2 {
+    font-family: 'PixelOperator8', Roboto;
+  }
+
   & > p {
     background-color: rgba(0, 0, 0, 0.4);
     border-radius: 20px;
@@ -241,6 +250,10 @@ export const About = styled.aside`
 `;
 
 export const Abilities = styled.div`
+  h2 {
+    font-family: 'PixelOperator8', Roboto;
+  }
+
   & > div {
     display: flex;
     justify-content: space-between;
@@ -259,6 +272,10 @@ export const Abilities = styled.div`
 `;
 
 export const Moves = styled.div`
+  h2 {
+    font-family: 'PixelOperator8', Roboto;
+  }
+
   & > div {
     display: flex;
     justify-content: space-between;
@@ -277,11 +294,16 @@ export const Moves = styled.div`
 `;
 
 export const EvolutionChain = styled.div`
+  h2 {
+    font-family: 'PixelOperator8', Roboto;
+  }
+
   .evochain_container {
     display: flex;
     justify-content: space-between;
     padding-left: 20px;
     max-width: 500px;
+    margin-top: 15px;
 
     .poke-type-bg {
       border-radius: 50%;
@@ -309,6 +331,8 @@ export const EvolutionChain = styled.div`
           border-radius: 4px;
           padding: 2px;
           margin-bottom: -5px;
+          font-family: 'PixelOperator', Roboto;
+          font-size: 28px;
 
           &:first-letter {
             text-transform: uppercase;
@@ -319,7 +343,7 @@ export const EvolutionChain = styled.div`
         color: black;
         position: relative;
         top: 25%;
-        left: 35%;
+        left: 25%;
       }
 
       .arrow-2 {

@@ -5,7 +5,6 @@ export const Container = styled.div`
 `;
 
 export const Card = styled.div`
-  font-family: 'Early GameBoy', sans-serif;
   padding: 20px;
   width: 220px;
   height: 320px;
@@ -27,11 +26,17 @@ export const Card = styled.div`
   }
 
   h3 {
-    opacity: 0.95;
-    letter-spacing: -1px;
     overflow: hidden;
     white-space: nowrap;
     width: 100%;
+    font-family: 'PixelOperator', Roboto;
+    font-size: 32px;
+    margin-top: 12px;
+    letter-spacing: 1px;
+
+    &:first-letter {
+      text-transform: uppercase;
+    }
   }
 
   p {
@@ -51,10 +56,10 @@ export const Card = styled.div`
 
   .poke-id {
     text-align: left;
-    font-weight: 600;
     margin-bottom: 10px;
     align-items: center;
     color: white;
+    font-family: 'PixelOperator8', Roboto;
   }
 
   .info-icon {
@@ -66,10 +71,10 @@ export const Card = styled.div`
 
   .poke-type {
     display: flex;
-    grid-gap: 0 10px;
     gap: 0 20px;
     align-items: center;
     justify-content: center;
+    margin-top: -15px;
   }
 
   .poke-type-bg {

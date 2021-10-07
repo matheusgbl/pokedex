@@ -47,7 +47,7 @@ const PokeCard = ({ id, name, image, type, onSelectCard }: PokeCardProps) => {
         }}
         onClick={onSelectCard}
       >
-        <div className="poke-id"># {String(id).padStart(3, '0')}</div>
+        <div className="poke-id">#{String(id).padStart(3, '0')}</div>
         <CgPokemon className="info-icon" size={30} />
         <div className="bg-color" />
         <Image

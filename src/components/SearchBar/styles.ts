@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const Container = styled.div`
   align-items: center;
   display: flex;
-  font-family: 'Early GameBoy', sans-serif;
+  font-family: 'EarlyGameBoy', sans-serif;
 
   label {
     font-size: 16px;
