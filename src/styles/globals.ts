@@ -29,8 +29,8 @@ export default createGlobalStyle`
 }
 
 @font-face {
-  font-family: 'EarlyGameboy';
-  src: url("/fonts/EarlyGameboy.ttf") format("truetype");
+  font-family: 'EarlyGameBoy';
+  src: url("/fonts/EarlyGameBoy.ttf") format("truetype");
 }
 
 html,
