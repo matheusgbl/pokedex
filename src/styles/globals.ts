@@ -13,6 +13,26 @@ export default createGlobalStyle`
     --border: 'none',
   }
 
+@font-face {
+  font-family: 'PixelOperator';
+  src: url("/fonts/PixelOperator.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: 'PixelOperator8';
+  src: url("/fonts/PixelOperator8.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: 'PixelOperatorHB';
+  src: url("/fonts/PixelOperatorHB.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: 'EarlyGameboy';
+  src: url("/fonts/EarlyGameboy.ttf") format("truetype");
+}
+
 html,
 body {
   padding: 0;
