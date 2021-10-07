@@ -1,20 +1,20 @@
 @font-face {
   font-family: 'PixelOperator';
-  src: url("../public/fonts/PixelOperator.ttf") format("truetype");
+  src: url("./assets/fonts/PixelOperator.ttf") format("truetype");
 }
 
 @font-face {
   font-family: 'PixelOperator8';
-  src: url("../public/fonts/PixelOperator8.ttf") format("truetype");
+  src: url("./assets/fonts/PixelOperator8.ttf") format("truetype");
 }
 
 @font-face {
   font-family: 'PixelOperatorHB';
-  src: url("../public/fonts/PixelOperatorHB.ttf") format("truetype");
+  src: url("./assets/fonts/PixelOperatorHB.ttf") format("truetype");
 }
 
 @font-face {
   font-family: 'EarlyGameboy';
-  src: url("../public/fonts/EarlyGameboy.ttf") format("truetype");
+  src: url("./assets/fonts/EarlyGameboy.ttf") format("truetype");
 }
 
