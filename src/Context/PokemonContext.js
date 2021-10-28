@@ -1,6 +1,6 @@
 import { createContext, useState, useCallback, useEffect } from 'react';
 
-import { api } from '~/services/api';
+import api from '~/services/api';
 
 const PokemonContext = createContext();
 
@@ -143,8 +143,8 @@ const PokemonProvider = ({ children }) => {
 
       await Promise.all(
         result.map(async pokemon => {
-          const result = await api.getPokemonByName(pokemon.name);
-          pokemonArr.push(result);
+          const result = await api.get(`/pokemon/${pokemon.name}`);
+          pokemonArr.push(result.data);
         })
       );
 
@@ -157,8 +157,10 @@ const PokemonProvider = ({ children }) => {
         limit: limit,
         offset: offset,
       };
-      const res = await api.getPokemonsList(interval);
-      const data = getPokemonData(res.results);
+      const res = await api.get(
+        `/pokemon?limit=${interval.limit}&offset=${interval.offset}`
+      );
+      const data = getPokemonData(res.data.results);
       setPokemons(await data);
       setFilteredPokemons(await data);
       setIsLoading(false);

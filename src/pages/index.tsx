@@ -14,7 +14,7 @@ import ScrollToTop from '~/components/ScrollToTop/ScrollToTop';
 import { PokeSearch } from '~/components/SearchBar/PokeSearch';
 import { PokemonContext } from '~/Context/PokemonContext';
 import GetPokemonEvolution from '~/hooks/GetPokemonEvolution';
-import { api } from '~/services/api';
+import api from '~/services/api';
 import GlobalStyle from '~/styles/globals';
 import {
   Container,
@@ -46,8 +46,8 @@ export const getStaticProps = async () => {
 
     await Promise.all(
       result.map(async (pokemon: { name: string }) => {
-        const result = await api.getPokemonByName(pokemon.name);
-        pokemonArr.push(result);
+        const result = await api.get(`/pokemon/${pokemon.name}`);
+        pokemonArr.push(result.data);
       })
     );
 
@@ -55,13 +55,8 @@ export const getStaticProps = async () => {
     return pokemonArr;
   };
 
-  const interval = {
-    limit: 151,
-    offset: 0,
-  };
-
-  const res = await api.getPokemonsList(interval);
-  const pokemons: pokeProps[] = await getPokemonData(res.results);
+  const res = await api.get('/pokemon?limit=151&offset=0');
+  const pokemons: pokeProps[] = await getPokemonData(res.data.results);
 
   return {
     props: {

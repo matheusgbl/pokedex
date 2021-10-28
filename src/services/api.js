@@ -1,2 +1,7 @@
-import Pokedex from 'pokedex-promise-v2';
-export const api = new Pokedex();
+import axios from 'axios';
+
+const api = axios.create({
+  baseURL: 'https://pokeapi.co/api/v2/',
+});
+
+export default api;

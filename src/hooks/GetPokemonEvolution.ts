@@ -2,7 +2,7 @@ import { useState } from 'react';
 
 import axios from 'axios';
 
-import { api } from '~/services/api';
+import api from '~/services/api';
 
 type SpeciesProps = {
   genera: string;
@@ -40,8 +40,8 @@ export default function GetPokemonEvolution() {
     const pokemonArr: any[] = [];
     await Promise.all(
       evoChain.map(async poke => {
-        const result = await api.getPokemonByName(poke.evolutionName);
-        pokemonArr.push(result);
+        const result = await api.get(`/pokemon/${poke.evolutionName}`);
+        pokemonArr.push(result.data);
       })
     );
     setEvoData(pokemonArr);
@@ -49,23 +49,23 @@ export default function GetPokemonEvolution() {
 
   const handlePokemon = (value: any) => {
     const fetchPokeAbout = async () => {
-      const getDetails = await api.getPokemonSpeciesByName(value.id);
-      fetchEvoImgs(getDetails.evolution_chain.url);
+      const getDetails = await api.get(`/pokemon-species/${value.id}`);
+      fetchEvoImgs(getDetails.data.evolution_chain.url);
       setPokeSpecies({
-        genera: getDetails.genera
+        genera: getDetails.data.genera
           .filter(
             (gen: { language: { name: string } }) => gen.language.name === 'en'
           )
           .map((gen: { genus: any }) => gen.genus)
           .toString(),
-        flavor_text_entries: getDetails.flavor_text_entries
+        flavor_text_entries: getDetails.data.flavor_text_entries
           .filter(
             (flav: { language: { name: string } }) =>
               flav.language.name === 'en'
           )[0]
           .flavor_text.replace('', ' ')
           .replace('POKéMON', 'POKÉMON'),
-        evolution_chain: getDetails.evolution_chain,
+        evolution_chain: getDetails.data.evolution_chain,
       });
     };
     setPokemonEvoDetail(value);

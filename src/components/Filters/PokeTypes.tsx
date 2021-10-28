@@ -1,12 +1,6 @@
-import React, { useState, useEffect } from 'react';
-
-import { api } from '~/services/api';
+import React, { useState } from 'react';
 
 import { Container } from './styles';
-
-type InputProps = {
-  name: string;
-};
 
 type ChangeValue = {
   onChangeValue: (value: string) => void;
@@ -14,15 +8,26 @@ type ChangeValue = {
 };
 
 export const PokeTypes: React.FC<ChangeValue> = ({ onChangeValue, value }) => {
-  const [types, setTypes] = useState<InputProps[]>([]);
-
-  useEffect(() => {
-    api
-      .getTypesList()
-      .then((response: { results: React.SetStateAction<InputProps[]> }) =>
-        setTypes(response.results)
-      );
-  }, []);
+  const [types] = useState([
+    'grass',
+    'bug',
+    'dark',
+    'dragon',
+    'electric',
+    'fairy',
+    'fighting',
+    'fire',
+    'flying',
+    'ghost',
+    'ground',
+    'ice',
+    'normal',
+    'poison',
+    'psychic',
+    'rock',
+    'steel',
+    'water',
+  ]);
 
   return (
     <Container>
@@ -35,9 +40,9 @@ export const PokeTypes: React.FC<ChangeValue> = ({ onChangeValue, value }) => {
           id="pokemon_types"
         >
           <option>All types</option>
-          {types.map(({ name }) => (
-            <option key={name} value={name}>
-              {name}
+          {types.map(type => (
+            <option key={type} value={type}>
+              {type}
             </option>
           ))}
         </select>
